@@ -1,0 +1,128 @@
+---
+title: "Lecture 3"
+author: "David Bergman"
+date: "09/05/17"
+output:
+  html_document:
+    number_sections: yes
+    toc: yes
+---
+
+# Sequences
+
+```{r}
+seq(1,6)
+```
+
+```{r}
+seq(4.1,7)
+```
+
+```{r}
+seq(to = 7, from=3)
+```
+```{r}
+seq(8,-9)
+```
+
+```{r}
+str(mtcars)
+```
+
+
+```{r}
+boxplot(mtcars$mpg)
+```
+
+
+```{r}
+hist(mtcars$mpg, 
+     main = "Historgraph of MPGs",
+     breaks = c(10,20,21,35))
+```
+
+
+
+
+
+
+
+
+
+
+```{r}
+hist(mtcars$mpg, 
+     main = "Historgraph of MPGs",
+     breaks = seq(10,35,3),
+     xlab = "mpg",
+     col = "blue")
+```
+
+
+# Contingency tables
+
+```{r}
+library(ISwR)
+str(stroke)
+x <- table(stroke$coma, stroke$diab)
+```
+
+
+```{r}
+x
+```
+
+```{r}
+x_withNA <- table(stroke$coma, stroke$diab, useNA = "always")
+x_withNA
+```
+
+```{r}
+y <- round(prop.table(x_withNA),4)
+y
+```
+
+```{r}
+prop.table(x_withNA,1)
+prop.table(x_withNA,2)
+```
+
+# functions
+
+```{r}
+user_defined_skew <- function(x){
+  x.mean = mean(x)
+  x.n = length(x)
+  num = 1/x.n*sum((x-x.mean)^3)
+  den = (1/(x.n-1))*(sum((x-x.mean)^2))
+  den = den^1.5
+  
+  return(num/den)
+}
+x_norm = rnorm(100)
+user_defined_skew(x_norm)
+```
+
+```{r}
+rep(365,3)
+```
+
+
+# Make a function for calculting the birthday problem probability
+
+```{r}
+birthday_prob_calc <- function(n=25){
+  num_seq <- seq(365,365-n+1)
+  den_seq <- rep(365,n)
+  num = prod(num_seq)
+  den = prod(den_seq)
+  return(1-num/den)
+}
+```
+
+
+
+```{r}
+birthday_prob_calc(3)
+```
+

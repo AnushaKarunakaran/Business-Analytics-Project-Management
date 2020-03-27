@@ -1,0 +1,200 @@
+---
+title: "R Notebook"
+author: "Anusha Karunakaran"
+date: "09/12/2019"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    theme: united
+  html_notebook: default
+  pdf_document: default
+name: Anusha Karunakaran
+---
+
+# Problem 1
+
+
+## Problem 1.a
+```{r}
+ncol(women)
+names(women)
+```
+
+There are two variables in this dataframe namely "height" and "weight". The weight is represented in pounds and height is represented in inches.
+
+## Problem 1.b
+
+```{r}
+BMI <- ((women$weight*703)/(women$height^2))
+```
+
+## Problem 1.c
+
+```{r}
+women["Body Mass Index"] = BMI
+women
+```
+
+## Problem 1.d
+
+```{r}
+library(moments)
+Arithmetic_Mean_BMI <- sum(BMI)/length(BMI)
+
+Standard_Deviation_BMI <- sqrt(sum((BMI-(sum(BMI)/length(BMI)))^2/(length(BMI)-1)))
+
+myskewness <-  function(x) {
+n <- length(x)
+(sum((x - (sum(x)/n))^3)/n)/(sum((x - (sum(x)/n))^2)/n)^(3/2)
+}
+
+mykurtosis <- function(x) {  
+n <- length(x)
+n * sum((x - (sum(x)/n))^4)/(sum((x - (sum(x)/n))^2)^2)
+}
+
+Arithmetic_Mean_BMI
+Standard_Deviation_BMI
+myskewness(BMI)
+mykurtosis(BMI)
+```
+
+## Problem 1.e
+
+The skewness here is 0.7744968. This value implies that the distribution of the data is slightly skewed to the right.It is skewed to the right because the computed value is positive, and is slightly, because the value is close to zero.
+
+## Problem 1.f
+
+The kurtosis here is 2.350354 implying that the distribution of the data is platykurtic, since the computed value is less than 3. The tails are shorter and thinner, and its central peak is lower and broader.
+
+
+# Problem 2
+
+
+## Problem 2.a
+
+```{r}
+Data <- read.table("C:/Users/anush/Downloads/Coursework/Statistics in BA/Homework Solutions/Sep - 12/filtered_qb.csv",sep=",",header=TRUE)
+```
+
+
+## Problem 2.b
+```{r}
+library(moments)
+projection_variable <- Data[["projections"]]
+mean(projection_variable)
+sd(projection_variable)
+skewness(projection_variable)
+
+actuals_variable <- Data[["actuals"]]
+mean(actuals_variable)
+sd(actuals_variable)
+skewness(actuals_variable)
+```
+
+Yes, There are noticeable differences in the central tendency, variablility and shape of the variables.
+The projection variable is skewed towards right whereas the actuals variable is skewed towards left.
+
+
+## Problem 2.c
+```{r}
+our.five.sum <- c(fivenum(actuals_variable))
+our.five.sum
+our.five.sum[3]
+```
+
+## Problem 2.d
+```{r}
+boxplot(projection_variable)
+boxplot(actuals_variable)
+```
+```{r}
+plot(projection_variable, actuals_variable)
+```
+
+No, the projections are not accurate. There is no correlation between actual and the projected variable.
+
+
+```{r}
+hist(projection_variable)
+hist(actuals_variable)
+```
+```{r}
+
+#Customized Scatter plot 
+plot(projection_variable, actuals_variable,xlab="Projection Variable", ylab="Actual Variable ",pch=19)
+abline(lm(projection_variable~actuals_variable), col="red") # regression line (y~x)
+lines(lowess(projection_variable,actuals_variable), col="blue") # lowess line (x,y)
+
+#Customized Histogram with Breaks = 10 
+hist(actuals_variable, 
+     main="Histogram for Actuals Variable", 
+     xlab="Passengers", 
+     border="green", 
+     col="black",
+     xlim=c(1,50),
+     las=1, 
+     breaks=10)
+
+#Customized Histogram with Breaks = 30 
+hist(actuals_variable, 
+     main="Histogram for Actuals Variable", 
+     xlab="Passengers", 
+     border="green", 
+     col="black",
+     xlim=c(1,50),
+     las=1, 
+     breaks=30)
+```
+
+
+
+
+# Problem 3
+
+
+## Problem 3.a
+
+```{r}
+nrow(cars)
+```
+
+## Problem 3.b
+
+```{r}
+copy_cars <- data.frame(cars)
+```
+
+## Problem 3.c
+
+```{r}
+copy_cars$time <- round((copy_cars$dist/copy_cars$speed),2)
+copy_cars
+```
+
+## Problem 3.d
+
+```{r}
+head(copy_cars,14)
+```
+
+## Problem 3.e
+
+```{r}
+median(copy_cars$time)
+```
+
+
+## Problem 3.f
+```{r}
+cat("Q1 and Q3 of Speed are :\n", fivenum(copy_cars$speed)[2],fivenum(copy_cars$speed)[4])
+cat("Q1 and Q3 of Distance are :\n", fivenum(copy_cars$dist)[2],fivenum(copy_cars$dist)[4])
+cat("Q1 and Q3 of Time  are :\n", fivenum(copy_cars$time)[2],fivenum(copy_cars$time)[4])
+```
+
+
+
+
+
+

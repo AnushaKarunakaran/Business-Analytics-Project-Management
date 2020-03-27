@@ -1,0 +1,311 @@
+---
+title: "Homework 3"
+author: "Ravi Shiripurapu and Sagarika Talla"
+date: "18 September 2019"
+
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    theme: united
+  html_notebook: default
+---
+
+
+
+###Note that n in this workbook is used for Intersection and U is used for Union at appropriate places.
+
+## Problem 1a
+
+Since A and B are independent events P(A n B) = P(A).P(B)
+
+Let's consider P(A n B') = P(A) - P(A n B)
+                         = P(A) - P(A).P(B)
+                         = P(A). [1 - P(B)]
+                         = P(A). P(B')
+
+We can say that A and B' are independent events.
+
+Theoretically when A and B are independent, the occurence of one events tells nothing about occurence of the second event. When you say something about the occurence of an event you are in fact implicitly talking about the complement of it. So when A and B are independent, the complement is also independent.
+                         
+
+## Problem 1b
+
+```{r}
+# Let a be the probability of P(A)
+a <- 2/3
+a
+# Let b be the probability of P(B)
+b <- 4/7
+b
+```
+
+###Note that n in this workbook is used for Intersection and U is used for Union at appropriate places.
+
+### Problem 1b.a
+
+Max Value of P(A n B)
+
+Theoretically, this happens when the smaller probability event is subset of the larger probability event, in which case the intersection is maximum. And the intersection is nothing but the smaller probability event(Imagine a venn diagram with the description)
+
+
+```{r}
+min(a,b)
+```
+
+### Problem 1b.b
+
+Min Value of P(A n B)
+
+Generally, P(A n B) is minimum when they are mutually exclusive events (when there is no intersection) and is 0.
+However, we need to check the constraint whether A U B is within the the sample space or not. Which means as long as a+b <= 1 A n B can have a min value of 0. What if a+b is exceeding 1? It suggests that there exists some intersection and the best case to have A n B a min value is when A U B just makes up 1.
+
+max(P(A U B)) = max(a + b - P(A n B))
+1 = a + b - min(A n B)
+min(A n B) = a+b - 1
+
+if a+b-1 is becoming negative you can safely say the min(A n B) as 0.
+
+```{r}
+max(0, (a+b)-1)
+```
+
+In a different case, give yourself some values to a and b such that a+b <= 1 and understand more. 
+
+
+### Problem 1b.c
+
+Max value of P(A n B')
+
+P(A n B') = A - P(A n B)
+
+max[P(A n B')] = max[A - P(A n B)]
+               = A - min[P(A n B)]
+               = a - max(0, (a+b)-1)    [Refer problem 1b.b]
+
+```{r}
+a - max(0, (a+b)-1)
+```
+
+### Problem 1b.d
+
+Min value of P(A n B')
+
+P(A n B') = A - P(A n B)
+
+max[P(A n B')] = min[A - P(A n B)]
+               = A - max[P(A n B)]
+               = a - min(a,b)           [Refer problem 1b.a]
+
+```{r}
+a - min(a,b)
+```
+
+
+### Problem 1b.e
+
+Max value of P(A U B)
+
+max[P(A U B)] = max[P(A) + P(B) - P(A n B)]
+              = P(A) + P(B) - min[P(A n B)]
+              = a + b - max(0, (a+b)-1)     [Refer problem 1b.b]
+
+```{r}
+a + b - max(0, (a+b)-1)
+```
+
+### Problem 1b.f
+
+Min value of P(A U B)
+
+min[P(A U B)] = min[P(A) + P(B) - P(A n B)]
+              = P(A) + P(B) - max[P(A n B)]
+              = a + b - min(a,b)          [Refer problem 1b.a]
+
+```{r}
+a + b - min(a,b)
+```
+
+
+### Problem 1b.g
+
+Max value of P(A/B)
+
+P(A/B) =  P(A n B)/P(B)
+max[P(A/B)] = max[P(A n B)/P(B)]
+            = max[P(A n B)]/P(B)
+            = min(a,b)/b
+            
+```{r}
+min(a,b)/b
+```
+            
+
+### Problem 1b.h
+
+Min value of P(A/B)
+
+P(A/B) =  P(A n B)/P(B)
+min[P(A/B)] = min[P(A n B)/P(B)]
+            = min[P(A n B)]/P(B)
+            = max(0, (a+b)-1)/b
+            
+```{r}
+max(0, (a+b)-1)/b
+```
+
+
+## Problem 2
+
+P(P|D): Probability that the test is positive for the disease given that the person has the disease
+P(P|D'): Probability that the test is positive for the disease given the person does not have the disease
+P(D)  : Probability that the patient has the disease
+
+P(P|D) = 0.95 
+P(P|D')=0.01
+P(D) = 0.005
+
+  P(D)  : Probability that the patient does not have the disease
+  P(D') = 1 - P(D) = 1-0.005 = 0.995
+
+
+To Calculate:
+P(D|P) : Probability that the person has the disease given the test is positive
+
+P(D|P) = {P(P|D).P(D)}/ {P(P|D).P(D) + P(P|D').P(D')}
+        = 0.95 * 0.005 / (0.95 * 0.005) + (0.01 * 0.995)
+
+```{r}
+(0.95 * 0.005) / ((0.95 * 0.005) + (0.01 * 0.995))
+```
+
+## Problem 3
+
+P(A): Probability that aircraft transmitter is made by company A
+P(B): Probability that aircraft transmitter is made by company B
+P(C): Probability that aircraft transmitter is made by company C
+
+P(A) = 0.8
+P(B) = 0.15
+P(c) = 0.05
+
+P(D|A): Probability that aircraft transmitter is defective given that it is made by company A 
+P(D|B): Probability that aircraft transmitter is defective given that it is made by company B
+P(D|C): Probability that aircraft transmitter is defective given that it is made by company C
+
+P(D|A) = 0.03
+P(D|B) = 0.065
+P(D|C) = 0.09
+
+
+## Problem 3a  
+
+Probability that the aircraft transmitter is made by Company A is:
+P(A) = 0.8
+  
+## Problem 3b
+
+If a randomly selected aircraft transmitter is tested and is found to be defective, find the probability that it was made by Company A.
+    
+P(A|D) = {P(A).P(D|A)} / {P(D|A).P(A) + P(D|B).P(B) + P(D|C).P(C)}
+       =  {0.8 * 0.03} / {(0.8 * 0.03) +  (0.065 * 0.15) +  (0.09 * 0.05)}
+
+```{r}
+(0.8 * 0.03) / ((0.8 * 0.03) +  (0.065 * 0.15) +  (0.09 * 0.05))
+```
+
+
+# Problem 4
+
+       
+## Problem 4a
+
+
+As each of the investments are independent of each other, the probability of 3rd investment is 1/2
+
+P(3rd Investment to be successful) = 1/2
+
+
+## Problem 4b
+
+
+In the given statement, there are only two possible scenarios:
+
+Saple space with given conditions = {SSS, FFF}
+favorable = {SSS}
+required probabilty = 1/2
+
+## Problem 4c
+Let S be the successful investment and N be the non-successful event
+
+If we look at the truth table below, there are three cases wherein there are exactly 2 Success (#2,#3,#5):
+
+1.SSS
+2.SSN
+3.SNS
+4.SNN
+5.NSS
+6.NSN
+7.NNS
+8.NNN
+
+Out of #2,#3,#5,
+ #3 and #5 has success in the third attempt.
+ Hence, P(Success in the third investment | 2 of the 3 events are successful) = 2/3
+
+This question is not clearly mentioned if at least two of the three investments is successful or only two of the three investments is successful. There by both interpretations are given full grade. 
+
+So below solution is also acceptable.
+P(Success in the third investment | at least 2 of the 3 events are successful) = 2/4 = 1/2
+
+
+## Problem 4d
+
+Suppose now that the probability that investment 1 is successful is 0.845, the probability that
+investment 2 is successful is 0.5505, and the probability that investment 3 is successful is 0.4.
+Consider these two events: A: two of the three investments are successful, and B: investment
+3 is successful. Are these events independent? Why or why not?
+
+
+Let S1, S2 and S3 be the events that the first, second and third investments are successful.
+P(S1) = 0.845,  P(S2)= 0.5505, P(S3)= 0.4
+
+P(A)     : Probability that the two of the three investments are successful 
+P(B)     : Probability of event that third investment is successful
+P(A U B) : Probability that two of the three investments are successful and third investment is successful
+      
+To prove that event A and event B are independant, 
+P(A|B) = P(A)
+
+P(A n B) =  P(S1')P(S2)P(S3) + P(S1)P(S2')P(S3) 
+
+```{r}
+(0.845 * 0.4495* 0.4) + (0.155 * 0.5505 *0.4)
+```
+
+         
+P(B)     = P(S1')P(S2')P(S3) + P(S1')P(S2)P(S3) + P(S1)P(S2')P(S3) + P(S1)P(S2)P(S3)
+
+```{r}
+(0.845 * 0.5505 * 0.4)+(0.845 * 0.4495 * 0.4)+(0.155 * 0.5505 * 0.4)+(0.155 * 0.4495 * 0.4)
+```
+
+
+P (A|B)   = P(A n B)/P(B)
+
+
+```{r}
+0.1861/0.4		
+```
+
+
+P(A)      = P(S1)P(S2')P(S3) + P(S1)P(S2)P(S3') + P(S1')P(S2)P(S3')
+
+```{r}
+(0.845* 0.5505* 0.6)+(0.845* 0.4495* 0.4)+(0.155* 0.5505*0.4)
+```
+
+P(A|B) = P(A). Hence, Event A and Event B independent to each other
+
+
+

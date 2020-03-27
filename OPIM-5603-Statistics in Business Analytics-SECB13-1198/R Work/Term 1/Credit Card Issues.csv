@@ -1,0 +1,8 @@
+Reason,Number of Instances
+ATM malfunctions,32
+ATM out of cash,28
+Card unreadable ,234
+Invalid amount requested,23
+Lack of funds in account,19
+Warped card jammed,365
+Wrong keystroke,23

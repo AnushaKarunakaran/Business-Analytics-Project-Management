@@ -1,0 +1,260 @@
+---
+title: "R Notebook"
+author: "Anusha Karunakaran"
+date: "10/24/2019"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    theme: united
+  html_notebook: default
+  pdf_document: default
+name: Anusha Karunakaran
+---
+
+
+# Problem 1
+
+## Problem 1.a
+
+The expected value of X is 10.
+
+```{r}
+Expected_X <- 10
+```
+
+
+## Problem 1.b
+
+The expected value of Y is 15.
+
+```{r}
+Expected_Y <- 15
+```
+
+## Problem 1.c
+
+```{r}
+Expected_Z <- 2*Expected_X + 3*Expected_Y
+Expected_Z
+```
+
+
+## Problem 1.d
+
+The variables Y and Z change in opposite directions.
+
+
+```{r}
+set.seed(100)
+X <- rnorm(100,10,2)
+Y <- rnorm(100,15,1)
+
+
+SD_Z <- sqrt(2*2*4 + 3*3*1 + 2*2*3*cov(X,Y))
+Z <- rnorm(100,Expected_Z,SD_Z)
+cor(Y,Z)
+```
+
+
+
+## Problem 1.e
+
+<b> Var(Y+Z) = Var(Y) + Var(Z) + 2*Y*Z*Cov(Y,Z) </b>
+
+```{r}
+Var_YZ <-  var(Y) +  var(Z) + 2*cov(Y,Z)
+Var_YZ
+``` 
+
+## Problem 1.f
+
+```{r}
+set.seed(100)
+Mean_YZ <- mean(Y) + mean(Z)
+SD_YZ <- sqrt(var(Y) + var(Z) + 2*cov(Y,Z))
+
+Simulate_YZ <- replicate(100,rnorm(1,Mean_YZ,SD_YZ))
+
+var(Simulate_YZ)
+```
+
+# Problem 2
+
+## Problem 2.a
+
+<pre>
+For K = 2 we have 1 – 1/K^2 = 1 - 1/4 = 3/4 = 75%. So Chebyshev’s inequality says that at least 75% of the data values of any distribution must be within two standard deviations of the mean.
+
+For K = 3 we have 1 – 1/K^2 = 1 - 1/9 = 8/9 = 89%. So Chebyshev’s inequality says that at least 89% of the data values of any distribution must be within three standard deviations of the mean.
+
+Maximum distribution that falls within k=2 and k=3 would be almost 1 because only a limited few values are very far off the mean, so that standard deviation is high. 
+
+Majority of the values are very close to the mean, to increase the maximum distribution within the 2/3 standard deviations to the mean.
+</pre>
+
+
+## Problem 2.b
+
+<pre>
+The discrete distribution that minimizes the portion of the distribution  that falls within 2 standard deviations of the mean is 'Poission Distribution'.
+The continuous distribution that minimizes the portion of the distribution  that falls within 2 standard deviations of the mean is 'Exponential Distribution'
+</pre>
+
+## Problem 2.c
+
+<pre>
+The discrete distribution that minimizes the portion of the distribution  that falls within 2 standard deviations of the mean is 'Poission Distribution'.
+The continuous distribution that minimizes the portion of the distribution  that falls within 2 standard deviations of the mean is 'Exponential Distribution'
+</pre>
+
+# Problem 3
+
+population_mean <- 120000
+population_sd <- 10000
+
+
+## Problem 3.a
+
+<pre>
+The sample of 10 individuals will be normally distributed.
+
+Mean of the sample = 120,000
+Standard Deviation of the sample = 10000/sqrt(10)
+                                 = 3162.28
+                                 
+</pre>
+
+```{r}
+Sample_Size_10 <- rnorm(10,120000,10000)
+mean(Sample_Size_10)
+```
+
+
+## Problem 3.b
+
+```{r}
+sd_3b <- 10000/sqrt(10)
+Simulate_3b <- replicate(1000,rnorm(10,120000,sd_3b))
+mean(Simulate_3b)
+sd(Simulate_3b)
+plot(Simulate_3b)
+hist(Simulate_3b)
+```
+
+
+It is larger than the previous one.
+
+
+## Problem 3.c
+
+```{r}
+sd_3c <- 10000/sqrt(10)
+Simulate_3c <- replicate(10000,rnorm(10,120000,sd_3c))
+mean(Simulate_3c)
+sd(Simulate_3c)
+plot(Simulate_3c)
+hist(Simulate_3c)
+```
+
+
+
+## Problem 3.d
+
+As we increse the replication numbers, the mean gets closer to the given mean and standard deviation decreases.
+
+```{r}
+sd_3d <- 10000/sqrt(10)
+Simulate_3d <- replicate(100000,rnorm(10,120000,sd_3d))
+mean(Simulate_3d)
+sd(Simulate_3d)
+plot(Simulate_3d)
+hist(Simulate_3d)
+```
+
+
+
+## Problem 3.e
+
+<pre>
+The sample of 30 individuals will be normally distributed.The histogram for this is slightly right skewed.
+
+
+Mean of the sample = 120,000
+Standard Deviation of the sample = 10000/sqrt(30)
+                                 = 1825.74
+                                 
+</pre>
+
+
+
+```{r}
+sd_3e <- 10000/sqrt(30)
+Sample_Size_30 <- rnorm(30,120000,sd_3e)
+mean(Sample_Size_30)
+plot(Sample_Size_30)
+hist(Sample_Size_30)
+
+
+```
+
+
+
+
+## Problem 3.f
+
+The histogram comes out to be more normally distributed as we replicate 1000 times. Hence, more replication improves the result.
+
+```{r}
+Simulate_3f <- replicate(100000,rnorm(30,120000,10000))
+mean(Simulate_3f)
+sd(Simulate_3f)
+plot(Simulate_3f)
+hist(Simulate_3f)
+```
+
+# Problem 4
+
+## Problem 4.a
+
+<pre>
+The multiplier for 95% confidence is 1.96
+Confidence Level - 0.23 to 0.31
+0.23 <- mean - 1.96*sd/sqrt(1000)
+0.31 <- mean + 1.96*sd/sqrt(1000)
+</pre>
+
+```{r}
+n <- 1000
+mean <- 0.27
+sd <- 0.645
+sd_sample <- sd/sqrt(1000)
+
+#P(X>0.1)
+1-pnorm(0.1,mean,sd_sample)
+```
+
+
+
+## Problem 4.b
+
+```{r}
+pnorm(0.31,mean,sd_sample) -pnorm(0.23,mean,sd_sample)
+```
+
+## Problem 4.c
+
+In any random sample atleast 10% have pet insurance. So the probability that pet owners in the sample having probability less than 0.1 is 0.
+
+
+```{r}
+probability <- 0.1
+standard_deviation <- sqrt((probability*(1-probability))/100)
+pnorm(0.05,probability,standard_deviation) -pnorm(0.00,probability,standard_deviation)
+```
+
+The maximum probability that David Bergman's test reports an interval of [0:0; 0:05] - 0.0473
+
+## Problem 4.d
+
+The confidence level of David Bergman's Test is 100%.

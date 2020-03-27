@@ -1,0 +1,116 @@
+---
+title: "R Notebook"
+author: "Anusha Karunakaran"
+date: "10/17/2019"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    theme: united
+  html_notebook: default
+  pdf_document: default
+name: Anusha Karunakaran
+---
+
+
+# Problem a
+a. Which of the following is not true of risk-aversion?
+1. Risk-averse investors are willing to accept less reward in exchange for less risk.
+2. A risk-averse person would prefer a safer gamble to a riskier one offering the same
+expected reward.
+3. Risk-averse investors need to be compensated to be induced to make riskier investments.
+4. A risk-averse person would always prefer a greater, non-guaranteed reward to a lesser,
+but guaranteed reward.
+
+# Problem b
+b. Which of the following asset classes has had the highest cumulative return since 1926?
+1. Large-cap stocks
+2. Small-cap stocks
+3. Corporate bonds
+4. Treasury bonds
+
+# Problem c
+c. Consider the returns for various asset classes presented in Exhibit 1. Which of the following
+statements is not correct?
+1. Large-cap stocks have earned a higher return than Treasury bonds.
+2. Treasury bonds have earned a higher return than Treasury bills.
+3. Treasury bonds have earned a higher return than corporate bonds.
+4. Small-cap stocks have earned a higher return than large-cap stocks.
+
+# Problem d
+d. Given two stock return distributions such as those displayed in Exhibit 2, which of the two
+stocks is riskier?
+1. The one with the lower expected return.
+2. The one with a distribution that is less spread out.
+3. The one with a greater variance of returns.
+4. The one with potential outcomes more concentrated around its expected return.
+
+# Problem e
+e. Figure 1 depicts the expected returns and standard deviations for five assets. Which assets
+are not dominated by any other asset?
+
+# Problem f
+f. Two stocks have annual return volatilities of 31% and 34%. The covariance between their
+returns is 0.033. What is the correlation coefficient? Round your answer to three decimal
+places.
+
+# Problem g
+g. A stock earned annual returns of 10%, 3%, and 12% over three consecutive years. During the
+same time period, market returns were 5%, 12%, and 8%. What was the correlation between
+the stock and market returns during this time period? Round your answer to three decimal
+places.
+
+# Problem h
+h. Assume that the correlation between a stock’s returns and market returns is 0.89, and the
+standard deviation of returns for the stock and the market index are 21% and 18%, respectively. What is the stock’s beta? Round your answer to two decimal places.
+
+
+# Problem i
+i. A stock earned annual returns of 2%, 2%, 14%, and 8% over four consecutive years. During
+the same time period, the annual market returns were 2%, 8%, 9%, and 2%, respectively.
+What is the stock’s beta? Round your answer to three decimal places.
+
+# Problem j
+j. This question should be answered based on the CSV file titled AAPL.csv available for download
+at HuskyCT, which provides stock prices and cash dividends for Apple (AAPL) and the S&P
+500 Total Return index (S&P500TR) as of the end of each month between September 2011
+and September 2016. What was the correlation between the monthly returns for Apple and
+the S&P 500 between September 2011 and September 2016? Round your answer to three
+decimal places.
+
+# Problem k
+k. This question should be answered based on the CSV file titled AAPL.csv available for download
+at HuskyCT, which provides stock prices and cash dividends for Apple (AAPL) and the S&P
+500 Total Return index (S&P500TR) as of the end of each month between September 2011
+and September 2016. What is Apple’s beta based on return data between September 2011
+and September 2016? Round your answer to two decimal places.
+
+# Problem l
+l. Which of the following is not correct regarding beta?
+1. If a stock has returns that are negatively correlated with market returns, then the stock
+has a negative beta.
+
+2. If a stock’s returns are perfectly correlated with market returns, the beta of the stock
+must be one.
+3. The beta of a broad market index equals one.
+4. If a stock’s returns are uncorrelated with market returns, the beta of the stock must be
+zero.
+
+# Problem m
+m. Consider two assets having returns R1 and R2, respectively. Assume that a portfolio contains
+fixed proportions of those two assets, so that the portfolio return equals x1R1 +x2R2 for fixed
+portfolio weights x1 and x2. Which of the following statements is not correct?
+1. In general, the lower the correlation between the returns of the two assets, the lower the
+risk of a portfolio that consists of fixed proportions of those two assets.
+2. With two uncorrelated assets, the standard deviation of the portfolio equals x1σR1 +
+x2σR2.
+3. The expected return on the portfolio is a weighted average of the expected returns of
+the individual component assets.
+4. It is possible to create a portfolio with a lower standard deviation than the deviation of
+return of either individual asset.
+
+
+# Problem n
+n. Suppose you have $20,000 invested in a stock with an annual return volatility of 40% and
+$38,000 invested in a stock with an annual return volatility of 38%. If the correlation coefficient between the two returns is 0.1, what is the standard deviation of your portfolio returns?
+Round your answers to two decimal places.

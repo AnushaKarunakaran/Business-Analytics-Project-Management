@@ -1,0 +1,253 @@
+---
+title: "Homework 6 Solutions"
+author: "Aman Manawat"
+date: "10/17/18"
+output:
+  html_document:
+    toc: yes
+---
+
+## Problem 1 
+
+Given:
+
+Investment A expected return: 10% and sd = 25%
+
+Investment B expected return: 15% and sd = 32%
+
+
+# Problem 1.a 
+
+```{r}
+
+# The correlation coefficient lies in the range of -1 to 1, hence the minimum value for correlation coeeficient of the given portfolio will be -1
+
+```
+
+
+# Problem 1.b 
+
+```{r}
+
+# The maximum value of correlation coefficient can be 1 for the two investments A and B
+covAB=1
+sdA=0.25
+sdB=0.32
+covMax=covAB*sdA*sdB
+print(covMax)
+```
+
+# Problem 1.c
+
+correlation cofficient between A and B = 0.6
+
+Invested 60% in A and 40% in B 
+
+```{r}
+
+#find: expected return of portfolio 
+
+# expected return is (amount invested in a)*(expected return of a) + (amount invested in b)*(expected return of b)
+
+expected_return <- 0.6*.1 + 0.4*.15
+print(expected_return)
+
+
+```
+
+# Problem 1.d 
+
+```{r}
+
+#find: variance of your portfolio 
+
+# covariance of A and B = (correlation cofficient of A and B) * (sd(A)*sd(B))
+
+covAB <- 0.6*0.25*0.32
+
+# variance is (amount invested in a)*Varaince(a) + (amount invested in b)*variance(b) +2(amount invested in a)*(amount invested in b)*(covariance of A and B)
+  
+variance_portfolio <-(0.6)^2*(0.25)^2+(0.4)^2*(0.32)^2+2*(0.6)*(0.4)*covAB
+print(variance_portfolio)
+
+
+```
+
+## Problem 2 
+
+# Problem 2.a 
+
+given: X is a uniformly distributed random variable with mean = 35 and sd = 2 
+
+```{r}
+
+# finding minimum and maximum value of a 
+
+# we know mean of uniform distribution is (min+max)/2 and sd is sqrt((max-min)^2/12)
+
+# (min+max)/2 = 35 
+# min+max = 70
+
+
+# sqrt((max-min)^2/12)=2 
+# max-min = sqrt(48)
+# max-min = 6.928
+
+max <- (70+sqrt(48))/2
+
+min <- 70-max
+
+samp_10000 <- replicate(10000,runif(4,min,max))
+
+avg_smpl <- mean(samp_10000)
+print(avg_smpl)
+
+
+sd_smpl <- sd(samp_10000)
+print(sd_smpl)
+```
+
+
+# Problem 2.b 
+
+```{r}
+
+samp_10000_40 <- replicate(10000,runif(40,min,max))
+
+avg_smpl_40 <- mean(samp_10000_40)
+print(avg_smpl_40)
+
+
+sd_smpl_40 <- sd(samp_10000_40)
+print(sd_smpl_40)
+
+```
+
+
+# Problem 2.c
+
+Given: Y is random variable with normal distribution with mean = 35 and sd = 2 
+
+```{r}
+
+sample_10000_nm <- replicate(10000,rnorm(4,35,4))
+
+avg_smpl_nm <- mean(sample_10000_nm)
+print(avg_smpl_nm)
+
+
+sd_smpl_nm <- sd(sample_10000_nm)
+print(sd_smpl_nm)
+
+
+```
+
+
+# Problem 2.d
+
+
+```{r}
+
+sample_10000_nm_40 <- replicate(10000,rnorm(40,35,4))
+
+avg_smpl_nm_40 <- mean(sample_10000_nm_40)
+print(avg_smpl_nm_40)
+
+
+sd_smpl_nm_40 <- sd(sample_10000_nm_40)
+print(sd_smpl_nm_40)
+
+
+```
+
+
+# Problem 2.e 
+
+
+```{r}
+
+
+# The above solved questions, 2.a, 2.b, 2.c and 2.d with uniform distribution for part a and b and normal distribution for part c and d, have average of sample mean very close to theoretical mean of the distribution and also the calculated standard deviation is close to the standard deviation given in question, implies they all seem to follow central limit theorem
+
+```
+
+
+## Problem 3
+
+# Problem 3.a
+
+given: X be the random variable that is uniformly distribution with mean = 10, min = 8 and max = 12
+
+```{r}
+
+# SD= sqrt((Max-Min)^2/12)
+# SD = sqrt((4^2)/12)
+# SD = sqrt(16/12)
+# SD = 1.154
+
+# find the percentage of the distribution which is within 2 standard deviation:
+# given by: mean + 2SD and mean - 2SD
+# => 10+2.308 and 10-2.308
+# => 12.308 and 7.692
+
+# above 2 standard deviation covers the minimum and maximum value. Hence the percentage of distribution within 2 sd is 100%
+
+```
+
+# Problem 3.b
+
+given: Y is the random variable that is uniformly distribution with mean = 10 and SD =3 
+
+```{r}
+
+# Let a be the Min value and b be the Max value
+# 
+# (a+b)/2 = 10
+# => a+b =20    -- equation 1
+# 
+# sqrt((b-a)^2/12) = 3
+# (b-a)^2 = 108
+# (b-a) = sqrt(108)     - equation 2
+# 
+# adding eq 1 & eq 2
+# 2b = 20 + 10.392
+# b = 15.196
+# a = 4.804
+
+# find the percentage of the distribution which is within 2 standard deviation:
+# given by: mean + 2SD and mean - 2SD
+# => 10+6 and 10-6
+# => 16 and 4
+
+# Our 2 standard deviation covers the minimum and maximum value. Hence the percentage of distribution within 2 sd is 100%
+
+```
+
+# Problem 3.c
+
+```{r}
+
+x_values <- c(-2,2,0)
+prob_x<- c((1/98),(1/98),(96/98))
+sampling_1000 <- sample(x_values,1000,replace=TRUE, prob=prob_x)
+sampling_1000_mean=mean(sampling_1000)
+sampling_1000_sd=sd(sampling_1000)
+sd2plus <- sampling_1000 <=sampling_1000_mean+2*sampling_1000_sd
+sd2minus <- sampling_1000 <=sampling_1000_mean-2*sampling_1000_sd
+distn<-(mean(sd2plus)-mean(sd2minus))*100 
+distn 
+
+
+```
+
+# Problem 3.d
+
+```{r}
+
+# Chebyshev's rule states regardless of how the data is distributed,at least (1-(1/(K^2)))*100 of the values will fall within K standard deviations of the mean (for K>1)
+
+# here for the question a, b and c it is given 2 standard deviation, hence k =2
+
+# chebyshev's rule says that 75% of your data should fall within 2sd of range, which holds good here as calculated in the above parts where parts a and b have 100% within 2 SD from mean and c has around 98% within 2 SD from mean 
+
+```

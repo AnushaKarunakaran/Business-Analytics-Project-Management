@@ -1,0 +1,232 @@
+---
+title: "R Notebook"
+author: "Anusha Karunakaran"
+date: "11/21/2019"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    theme: united
+  html_notebook: default
+  pdf_document: default
+name: Anusha Karunakaran
+---
+
+  
+  
+# Problem 1
+
+## Problem 1.a
+
+```{r}
+set.seed(30)
+X <- rnorm(30,mean=30,sd=5)
+Y <- 10*X + rnorm(30,mean=3,sd=1)
+reg1 <- lm(Y~X)
+```
+
+### Problem 1.a.1
+```{r}
+reg1$coefficients
+```
+
+### Problem 1.a.2
+```{r}
+test_data <- data.frame(X = 32.8)
+predict(reg1,test_data)
+```
+
+### Problem 1.a.3
+```{r}
+summary(reg1)$r.square
+sse <- sum(( fitted(reg1) - mean(Y))^2)
+ssr <- sum(( fitted(reg1) - Y)^2)
+sst <- ssr + sse
+R2 <- 1 - (ssr/sst)
+R2
+```
+
+
+## Problem 1.b
+```{r}
+set.seed(30)
+X2 <- runif(30, min = 20, max = 30)
+Y2 <- (10*X2) + rnorm(1,mean=3,sd=1)
+reg2 <- lm(Y2~X2)
+```
+
+### Problem 1.b.1
+```{r}
+reg2$coefficients
+```
+### Problem 1.b.2
+```{r}
+test_data <- data.frame(X2 = 32.8)
+predict(reg2,test_data)
+```
+### Problem 1.b.3
+```{r}
+summary(reg2)$r.square
+sse <- sum(( fitted(reg2) - mean(Y2))^2)
+sse
+ssr <- sum(( fitted(reg2) - Y2)^2)
+ssr
+sst <- ssr + sse
+sst
+R2 <-  1 - (ssr/sst)
+R2
+```
+
+## Problem 1.c
+```{r}
+set.seed(30)
+X3 <- rnorm(30,mean=30,sd=5)
+Y3<- 10*X3*X3 + rnorm(30,mean=3,sd=1)
+reg3 <- lm(Y3~X3)
+```
+### Problem 1.c.1
+```{r}
+reg3$coefficients
+```
+### Problem 1.c.2
+```{r}
+test_data <- data.frame(X3 = 32.8)
+predict(reg3,test_data)
+```
+### Problem 1.c.3
+```{r}
+summary(reg3)$r.square
+sse <- sum(( fitted(reg3) - mean(Y3))^2)
+ssr <- sum(( fitted(reg3) - Y3)^2)
+sst <- ssr + sse
+R2 <- 1 - (ssr/sst)
+R2
+```
+
+## Problem 1.d
+```{r}
+plot(X,Y)
+plot(X2,Y2)
+plot(X3,Y3)
+```
+
+
+
+
+
+# Problem 2
+
+## Problem 2.a
+
+```{r}
+test1 <- lm(mpg ~ hp, data = mtcars)
+summary(test1)
+```
+
+
+## Problem 2.b
+```{r}
+coeffs <- test1$coefficients
+coeffs
+```
+
+<b> Regression Equation = 30.10 - 0.068*hp </b>
+
+## Problem 2.c
+```{r}
+test_data <- data.frame(hp = 110)
+predict(test1,test_data)
+```
+
+<b> If hp=110 , then predicted mpg of a car is 22.59 </b>
+
+## Problem 2.d
+
+<b>
+H0: There is no linear relationship between hp and mpg.
+H1: There is linear relationship between hp and mpg.
+</b>
+
+```{r}
+test2 <- lm(mtcars$mpg ~ mtcars$hp)
+summary(test2)
+```
+
+<b> The p-value is  1.788 x 10-7, so that we reject the null hypothesis (b1 = 0) and conclude that there is statistical evidence to support that “hp” is linearly related to “mpg” </b>
+
+
+## Problem 2.e
+
+```{r}
+cor(mtcars$mpg , mtcars$hp)
+```
+
+ <b> The correlation between hp and mpg is -0.7761 </b>
+
+
+## Problem 2.f
+```{r}
+test3 <- cor.test(mtcars$mpg,mtcars$hp)
+test3$conf.int
+```
+<b> 95 percent confidence interval: -0.8852686 -0.5860994 </b>
+
+## Problem 2.g
+
+```{r}
+test3$p.value
+```
+
+<b> The p-value is 1.787835 x 10-7, so that we reject the null hypothesis (b1 = 0) and conclude that there is statistical evidence to support that “hp” is linearly related to “mpg” </b>
+
+## Problem 2.h
+
+<b> p-values are relatively the same in both the cases. We can say that there is some statistical significance that both the values are negatively linearly related (m, the coefficient, is negative). Or they have negative correlation. </b>
+
+
+## Problem 2.i
+
+```{r}
+y = mtcars$mpg
+cor(mtcars$mpg,mtcars$cyl)
+cor(mtcars$mpg, mtcars$disp)
+cor(mtcars$mpg, mtcars$hp)
+cor(mtcars$mpg, mtcars$drat)
+cor(mtcars$mpg, mtcars$wt)
+cor(mtcars$mpg, mtcars$qsec)
+cor(mtcars$mpg, mtcars$vs)
+cor(mtcars$mpg, mtcars$am)
+cor(mtcars$mpg, mtcars$gear)
+cor(mtcars$mpg,mtcars$carb)
+```
+
+```{r}
+# From the above correlation plot, we understand that mpg has a strong correlation with cyl, disp, hp, wt.
+
+#Model 1:
+mod_1 = lm(y~mtcars$cyl + mtcars$disp + mtcars$hp +mtcars$wt)
+
+summary(mod_1)
+
+# R-squared:  0.8486,	Adjusted R-squared:  0.8262 
+
+# Model 2:
+
+mod_2= lm(y~mtcars$cyl + mtcars$disp + mtcars$hp +mtcars$wt + mtcars$drat)
+
+summary(mod_2)
+#R-squared:  0.8513,	Adjusted R-squared:  0.8227 
+
+# Model 3:
+
+mod_3 = lm(y~mtcars$cyl + mtcars$disp + mtcars$hp +mtcars$wt + mtcars$drat + mtcars$vs +mtcars$carb)
+
+summary(mod_3)
+# R-squared:  0.8521,	Adjusted R-squared:  0.809 
+
+# As we increase the variables the R-Square value is improving but adjusted R-Square value is decreasing. 
+
+# Model 1 seems to have the best adjusted R-Square value. 
+
+```
+

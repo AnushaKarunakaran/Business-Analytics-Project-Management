@@ -1,0 +1,339 @@
+---
+title: "Homework 3 Solutions"
+date: "09/25/18"
+author: "DB, ABS, RM"
+output:
+  html_document:
+    toc: yes
+---
+# Problem 1
+
+## Problem 1a
+A = (A n B) u (A n B')
+
+Let us consider an element 'x'. Let's say x belongs to (A n B) u (A n B')
+If x belongs to (A n B) then x belongs to A and to B , (by the rule of intersection)
+Considering that x belongs to B , it is implied that x CANNOT belong to B' ( by the rule of complement )
+But in either case, x belongs to A. 
+
+Therefore, it is clear that A = (A n B) u (A n B')
+
+Example:
+
+Let's consider a universe of natural numbers from 1 to 5 {1,2,3,4,5}
+Let A = {1,2}
+Let B = {1,2,3}
+
+Therefore , B' = {4,5}
+
+A n B = {1,2}
+A n B' = {}
+
+Therefore (A n B ) u (A n B') = {1,2} = A
+
+## Problem 1b
+
+Argue that A u B = A u (B n A')
+
+Since the first even is the same over both expressions, we need only argue that those elements in in A but in B are in (B n A').  This is by definition. 
+
+Alternatively, one can solve this problem as follows.
+ 
+Consider the expression on the right hand side, A u (B n A')
+
+By distributive law,
+A u (B n A') = (A u B) n (A u A')
+
+We know that (A u A') = the universal set = U [Complementary law]
+
+Therefore,
+(A u B) n (A u A') 
+=(A u B) n U 
+=(A u B) , the intersection of any set with the universal set is the set itself
+
+Hence, A u (B n A') = A u B
+
+## Problem 1c
+
+P(A) = 1
+This implies that event A is a sure event.
+
+=> P(A') = 1 - P(A) (By the rule of complement)
+
+### Problem 1ca
+
+P(A|B) = P(A n B) / P(B)
+
+Applying Bayes' theorem,
+
+P(A|B) = P(B|A)P(A) / (P(B|A)P(A) + P(B|A')P(A'))
+=P(B|A) / (P(B|A) + 0) [Substituting the values of P(A) and P(A')]
+=P(B|A) / P(B|A)
+= 1 
+
+### Problem 1cb
+
+P(A'|B) = P(B|A')P(A') / (P(B|A')P(A') + P(B|A)P(A)) [By Bayes' Theorem]
+= P(B|A')x 0 / ( (P(B|A') x 0) + (P(B|A) x 1)) [Substituting the values of P(A) and P(A')]
+= 0
+
+### Problem 1cc
+
+P(B|A) = P(B n A)/ P(A) [By conditional probability]
+
+Considering that P(A) = 1 , it is a sure event and will occur independent of other events
+=> P( A n B) = P(A)P(B) [Independent events]
+=> P(B|A) =  P(B)P(A)/P(A) = P(B)
+
+Therefore P(B|A) = P(B)
+
+### Problem 1cd
+
+Let's consider , P(B|A')
+
+By the defintion of conditional probability ,
+P(B|A') = P(B n A') / P(A') 
+
+But this formula holds if and only if P(A') >0. In this case, P(A') = 0 , is an impossible event. Therefore, P(B|A') does not exist.  
+
+# Problem 2
+
+## Problem 2a
+
+In order to prove the princle of inclusion exclusion for 3 events, lets first prove the principle for 2 events. 
+
+First we will consider two arbitrary events, A and B. We have to prove that P(A n B) = P(A) + P(B) - P(A n B)
+
+In set theory, A u B can be represented as the sum of disjoint sets.
+
+A u B = (A n B') U (A n B) U (A' n B)
+
+This holds in probability theory as well,
+
+P(A u B) = P(A n B') + P(A n B) + P(A' n B) ------> 1
+P(A) = P(A n B') + P(A n B) 
+=> P(A n B') = P(A) - P(A n B) ------> 2
+P(B) = P(A' n B) + P(A n B) 
+=> P(A' n B) = P(B) - P(A n B) ------> 3
+
+Substituting 2 and 3 in 1 we have,
+P(A u B) = P(A) - P(A n B) + P(B) - P(A n B) + P(A n B)
+
+Therefore, P(A u B) = P(A) + P(B) - P(A n B)
+
+Now lets prove the same for 3 arbitrary sets,  A,B and C
+We have to prove that 
+
+P(A u B u C) = P(A) + P(B) + P(C) - P(A n B) - P(B n C) - P(A n C) + P(A n B n C)
+
+Let X = B U C
+=> P(A u B u C) = P(A u X) 
+
+Now by the principle of inclusion exclusion proved above, 
+P(A u X) = P(A) + P(X) - P(A n X) ------> 4
+
+But P(X) = P(B U C)
+=> P(B U C) = P(B) + P(C) - P(B n C) - again by the principle of inclusion exclusion ------> 5
+
+Substitute 5 in 4,
+P(A u X) = P(A u B U C) = P(A) + P(B) + P(C) - P(B n C) - P(A n (BUC))
+= P(A) + P(B) + P(C) - P(B n C) - P((A n B) U (A n C)) ---------> 6 [By distributive law]
+
+Now apply princple of inclusion exclusion on P((A n B) u (A n C)), 
+P((A n B) u (A n C))  = P(A n B) + P(A n C) - P( A n B n A n C)
+
+= P(A n B) + P(A n C) - P( A n B n C) --------> 7
+
+Substitute 7 in 6,
+
+P(A u B U C) = P(A) + P(B) + P(C) - P(B n C) - [P(A n B) + P(A n C) - P( A n B n C)]
+
+Therefore P(A u B u C) = P(A) + P(B) + P(C) - P(A n B) - P(B n C) - P(A n C) + P(A n B n C)
+
+To understand this intuitively,
+
+We know that P(A u B U C) can be expressed as P(A) + P(B) + P(C). But the problem with this is that, if A , B and C are not disjoint, then we will count P(A n B) , P(B n C) and P(A n C) twice. To account for this double counting, we have to subtract the pairwise intersections. But by doing this, we will subtract the intersection of all three events thrice. And therefore, to account for that, we will add P(A n B n C) to account for it once.
+
+Thus, Therefore P(A u B u C) = P(A) + P(B) + P(C) - P(A n B) - P(B n C) - P(A n C) + P(A n B n C)
+
+## Problem 2b
+
+P(A) = 0.1 P(B) = 0.2 and P(C) = 0.3
+P(A u B u C) = P(A) + P(B) + P(C) - P(A n B) - P(B n C) - P(A n C) + P(A n B n C) [Principle of inclusion exclusion]
+= 0.1 +0.2+0.3 - P(A n B) - P(B n C) - P(A n C) + P(A n B n C)
+= 0.6 - P(A n B) - P(B n C) - P(A n C) + P(A n B n C)
+
+The maximum value of P(A u B u C) is when P(A n B) , P(B n C) , P(A n C) , P(A n B n C) are all zero. 
+
+Or in other words, P(A u B u C) is maximum when A , B and C are mutually exclusive. [When events are mutually exclusive the intersections are zero].
+
+Therefore, the maximum value of P(A u B u C) = 0.6
+
+Now lets find the minimum value that P(A u B u C) can take:
+
+To minimize P(A u B u C), we must maximize the pairwise intersections , P(A n B), P(A n C) and P(B n C)
+
+The maximum value that P(A n B) can take is 0.1 = P(A) [this case occurs if A is a subset of B] -------->1
+The maximum value that P(A n C) can take is 0.1 = P(A) [this case occurs if A is a subset of C] -------->2
+The maximum value that P(B n C) can take is 0.2 = P(B) [this case occurs if B is a subset of C] -------->3
+
+The value of P(A n B n C) in this case is 0.1 [since A is a subset of B and B is a subset of C] -----> from 1, 2 and 3
+
+Therefore the minimum value of P(A u B u C) = P(A) + P(B) +P(C) - P(A n B) - P(B n C) - P(A n C) + P(A n B n C)
+=0.6 - 0.1 - 0.2 - 0.1 + 0.1
+= 0.3
+
+Therefore,0.3 <= P(A u B u C) <= 0.6
+
+## Problem 2c
+
+Three events, A , B and C are said to be mutually independent if and only if the probability of occurrence of any 2 of these events is the product of their associated probabilites. 
+So considering that A B and C are mutually independent , this implies they are pairwise independent as well.
+
+In other words, P(A n B) = P(A)P(B) , P(A n C)= P(A)P(C) and P(B n C) = P(B)P(C) and P(A n B n C) = P(A)P(B)P(C)
+Therefore,
+
+P(A n B) = P(A)P(B) = 0.1 x 0.2  = 0.02
+P(A n C) = P(A)P(C) = 0.2 x 0.3  = 0.06
+P(B n C) = P(B)P(C) = 0.1 x 0.3  = 0.03
+P(A n B n C) = P(A)P(B)P(C) = 0.1 x 0.2 x 0.3 = 0.006
+
+Now ,
+P(A u B u C) = P(A) + P(B) +P(C) - P(A n B) - P(B n C) - P(A n C) + P(A n B n C) [Principle of inclusion exclusion]
+= 0.6 - 0.02 - 0.06 - 0.03 +0.006
+=0.496
+
+Therefore, P(A u B u C) = 0.496
+
+## Problem 2d
+
+If A and C are mutually exclusive => P(A n C) = 0 [By rule of mutual exclusivity] ----------> 1
+If A and B are independent events => P(A n B) = P(A)P(B) = 0.1 x 0.2 = 0.02 [By rule of independence] -----> 2
+If B and C are independent events => P(B n C) = P(B)P(C) = 0.2 x 0.3 = 0.06 [By rule of independence] -----> 3
+
+Now if two out of three events are mutually exclusive, then the intersection of all the events is also empty. 
+=> P(A n B n C) = 0
+
+P(A u B u C) = P(A) + P(B) +P(C) - P(A n B) - P(B n C) - P(A n C) + P(A n B n C) [Principle of inclusion exclusion] 
+P(A u B u C) = 0.1+0.2+0.3 - 0.02 - 0.06 -0 + 0 [substituting values of P(A) , P(B) , P(C) and from 1, 2 and 3]
+P(A u B u C) = 0.6 - 0.08 = 0.52
+Therefore, P(A u B u C) = 0.52
+
+## Problem 2e
+ 
+It's given that
+
+A is independent of B, A is independent of C, and B is independent of C
+Although these events are pair-wise independent, it is not necessarily true that A must be independent of (B n C). So it is definitely possible that A is NOT independent of (B n C)
+
+Let us consider rolling two dice. 
+
+The sample space is given by:
+{
+(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6),
+(2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6),
+(3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (3, 6),
+(4, 1), (4, 2), (4, 3), (4, 4), (4, 5), (4, 6),
+(5, 1), (5, 2), (5, 3), (5, 4), (5, 5), (5, 6),
+(6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6)
+}
+
+Let A be the event that a sum of 7 is obtained 
+Let B be the event that 3 was obtained on the second die
+Let C be the event that 4 was obtained on the first die
+
+Now,
+
+P(A) = P(sum of 7 is obtained) = 6/36 = 1/6 
+P(B) = P(3 is rolled on die 2) = 6/36 =1/6
+P(C) = P(4 is rolled on die 1) = 6/36 = 1/6
+
+P(A n B) = P(sum of 7 is obtained and 3 is rolled on die 2) = 1/36 = P(A)P(B)
+P(B n C) = P(3 is rolled on die two and 4 is rolled on die 1) = 1/36 = P(B)P(C)
+P(A n C) = P(sum of 7 is obtained and 4 is rolled on die 1) = 1/36 = P(A)P(C)
+
+Now , P(A n B n C) = 1/36 [Also equal to the probability of P(B n C)] 
+
+But if A, B and C were mutually independent, then P(A n B n C) must have been P(A)P(B)P(C) = 1/216
+But P(A n B n C ) = 1/36 and is NOT equal to 1/216 
+
+Therefore, It is not necessary for pairwise independent events to be mutually independent. Hence, it is possible to design an experiment such that A,B ; B,C and A,C are independent but A is not independent of B n C.
+
+# Problem 3
+C - Event that a user clicks
+C' - Event that a user does not click
+O - Event that a user is 18 years or older
+O' - Event that a user is less than 18 years old
+
+Given:
+P(O') = 0.3 => P(O) = 1 - 0.3 = 0.7
+P(C|O') = 0.02
+P(C|O) = 0.05
+
+```{r}
+P_O_prime <- 0.3
+P_O <- 1 - P_O_prime
+P_C_given_O_prime <- 0.02
+P_C_given_O <- 0.05
+```
+
+## Problem 3a
+To Find: P(O|C)
+Applying Bayes Theorem,
+P(O|C) = (P(C|O)*P(O))/(P(C|O)P(O) + P(C|O')P(O'))
+```{r}
+P_O_given_C <- ((P_C_given_O)*P_O)/(P_C_given_O*P_O + P_C_given_O_prime*P_O_prime)
+ans <- P_O_given_C
+ans
+```
+
+## Problem 3b
+To Find: P(O'|C')
+Applying Bayes Theorem,
+P(O'|C') = (P(C'|O')*P(O'))/(P(C'|O')P(O') + P(C'|O)P(O))
+
+Also, since we know that P(C|O') = 0.02 and P(C|O) = 0.05, we know P(C'|O') = 0.98 and P(C'|O) = 0.95 because C,C' are MECE and conditioned on the same event O'
+```{r}
+P_C_prime_given_O_prime <- 1 - P_C_given_O_prime
+P_C_prime_given_O <- 1 - P_C_given_O
+P_O_prime_C_prime <- (P_C_prime_given_O_prime*P_O_prime)/(P_C_prime_given_O_prime*P_O_prime + P_C_prime_given_O*P_O)
+ans <- P_O_prime_C_prime
+ans
+```
+
+# Problem 4
+Let
+C - Event that a family owns their own car
+H - Event that a family owns their own home
+
+Given:
+P(C) = 0.6
+P(H) = 0.3
+P(C and H) = 0.2
+
+## Problem 4a
+To Find: P(C or H) - P(C and H)
+```{r}
+P_C <- 0.6
+P_H <- 0.3
+P_C_and_H <- 0.2
+P_C_or_H <- P_C + P_H - P_C_and_H
+ans <- P_C_or_H - P_C_and_H
+ans
+```
+## Problem 4b
+To Find: P(C|H)
+```{r}
+P_C_given_H <- P_C_and_H/P_H
+ans <- P_C_given_H
+ans
+```
+# Problem 5
+```{r}
+library(ISwR) # including the ISwR package
+
+myBreaks <- seq(min(stroke$age),max(stroke$age),length = 12) # creating the vector myBreaks
+xlim_values <- c(1,100) #creating a vector of length 2 
+
+hist(stroke$age, main = "Amazing Histogram",freq =TRUE, xlab = "Age", xlim=xlim_values ,col = "blue", breaks= myBreaks) #customized histogram
+```

@@ -1,0 +1,124 @@
+---
+title: "Lecture 2"
+author: "david bergman"
+date: "09/05/17"
+output:
+  html_document:
+    toc: true
+    theme: united
+    number_sections: true
+---
+
+```{r}
+library("ISwR")
+```
+
+```{r}
+str(stroke)
+```
+
+
+```{r}
+str(stroke$age)
+```
+
+```{r}
+str(x)
+```
+
+```{r}
+summary(stroke)
+```
+
+
+```{r}
+y <- stroke$age 
+```
+
+
+```{r}
+var1 <- 3
+var2 <- var1
+var2 <- 6
+var1
+var2
+```
+
+
+```{r}
+y <- sort(y)
+```
+
+```{r}
+sd(y)
+var(y)
+var(y) == sd(y)^2
+```
+
+
+```{r}
+str(y)
+```
+
+```{r}
+setwd("C:/Users/dbergman/Dropbox/Classes/UConn/OPIM5603/2019F/Lecture 2/InClass")
+getwd()
+```
+
+```{r}
+davidsdata <- read.table("Credit Card Issues.csv",sep=",",header=FALSE)
+```
+
+
+```{r}
+View(davidsdata)
+```
+
+
+
+```{r}
+y <- stroke$age
+```
+
+
+
+```{r}
+mean(y)
+```
+
+```{r}
+sum(y)/length(y)
+```
+
+
+
+```{r}
+var(y)
+```
+
+```{r}
+mean.y <- mean(y)
+calculatedVar <- 1/(length(y)-1)*sum( (y - mean.y)^2 )
+calculatedVar
+sqrt(calculatedVar)
+```
+
+
+```{r}
+skew(y)
+```
+
+```{r}
+set.seed(3293287)
+x <- rnorm(100,mean=10,sd=3)
+mean(x)
+#
+```
+
+
+
+
+
+
+
+

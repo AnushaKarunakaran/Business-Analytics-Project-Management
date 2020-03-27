@@ -1,0 +1,187 @@
+---
+title: "Lecture 4"
+author: "David Bergman"
+date: "09/19/17"
+output:
+  html_document:
+    number_sections: yes
+    toc: yes
+---
+
+# Read file and calculate mean
+
+```{r}
+mean_calc <- sum(DiscreteProbDistribution$x * DiscreteProbDistribution$p)
+mean_calc
+var_calc <- sum(
+  ( DiscreteProbDistribution$x - mean_calc )^2
+  *
+  DiscreteProbDistribution$p
+)
+var_calc
+sd_calc = sqrt(var_calc)
+sd_calc
+```
+
+# Example on slide 27
+
+Let X be the number of defective computers.
+
+We will model X as a binomial distribution with n = 150 and pi = 0.12
+
+```{r}
+n = 150
+pi = 0.12
+```
+
+
+## What is the probability that 10 computers will have the defect?
+
+We are looking for P( X = 10 )
+
+```{r}
+dbinom( 10 , n, pi )
+```
+
+Let Y be the number of computers without a defect
+
+We are going to model Y as a binomial distribution with n = 150 and pi = 0.88
+
+Look for P(Y=140)
+
+```{r}
+dbinom( 140 , 150 , 0.88 )
+```
+
+## What is the probability that no more than 25 computers will have the defect?
+
+Looking for P(X <= 25)= F(25)
+
+```{r}
+pbinom( 25,n,pi )
+```
+
+## What is the probability that fewer than 25 but at least 20 computers will have the defect?
+
+P(20 <= X < 25  )
+
+P(20 <= X < 25  ) = P(X < 25) - P(X<20)
+
+P(20 <= X < 25  ) = P(X <= 24) - P(X<=19)
+
+
+```{r}
+pbinom( 24,n,pi ) - pbinom( 19,n,pi )
+```
+
+
+P(20 <= X < 25  ) = P(X <= 24.5) - P(X<=19.00001)
+
+```{r}
+pbinom( 24.5,n,pi ) - pbinom( 19.00001,n,pi )
+```
+
+```{r}
+pbinom( 25,n,pi ) - pbinom( 19.00001,n,pi )
+```
+
+## How many computers does Corporation X expect to have this defect?
+
+E(X)
+
+```{r}
+n*pi
+```
+
+
+## What is the standard deviation of the number of computers that have this defect?
+
+```{r}
+sqrt( n*pi*(1-pi) )
+```
+
+## Corporation X is reconsidering their decision to purchase the computers.  They only want to make the purchase if the probability of having more than 22 computers with the defect is less than 0.2.  Will the purchase be made?
+
+What is P(X > 22)?
+
+P(X > 22) = 1 - P(X <= 22)
+
+```{r}
+1 - pbinom(22,n,pi)
+```
+
+Yes!
+
+## Suppose that you are in charge of purchasing the computers, and you want to assure the president of Corporation X that this is a good purchase.  Your goal is to tell her “I am at least 90% sure that there will be at most K defective motherboards.” Of course, the lower K is, the better.  What is the lowest value of K that you can make this claim for?
+
+I want the minimium value of k for which:
+P(  X <= k ) >= 0.9 
+or
+P( Y >= (n-k)  ) >= 0.9>?>???????? Is this right?
+
+```{r}
+pbinom(0,n,pi)
+pbinom(1,n,pi)
+pbinom(10,n,pi)
+pbinom(22,n,pi)
+pbinom(23,n,pi)
+```
+
+K = 23
+
+```{r}
+qbinom(0.9,n,pi)
+```
+
+
+
+
+## Slide 34
+
+The IT department at Corporation X maintains the website for the company.  Past experience indicates that during working hours, the average time between successive complaints on their website is 20 minutes.  If we model the number of complaints received in given work day as a Poisson distribution:
+
+
+Let N = number of complaints in a given work day
+
+Let's models N as a Poisson distribution with lambda = 8*3 = 24!
+(assume 8 hour work day)
+
+
+```{r}
+our_lambda = 8*3
+```
+
+# What is the average number of complaints received in an eight-hour work day?
+
+```{r}
+our_lambda
+```
+
+# In an eight-hour work day, what is the probability that the IT department will receive fewer than 20 complaints?
+
+P( X < 20 ) = P(X <= 19) = P(X <= 19.25) 
+
+
+```{r}
+ppois(19,our_lambda)
+```
+
+
+# The Friday before each holiday, the IT department responds to complaints only for the first six hours of the day.  What is the probability that the IT department will receive fewer than 20 complaints in a six-hour day?
+
+Let M = # complaints in six hours
+
+```{r}
+new_lambda = 3*6
+```
+
+P(M <20)
+
+```{r}
+ppois(19,new_lambda)
+```
+
+
+
+
+

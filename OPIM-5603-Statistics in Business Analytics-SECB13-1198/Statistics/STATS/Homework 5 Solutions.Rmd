@@ -1,0 +1,155 @@
+---
+title: "Homework 5 Solutions"
+author: "David Bergman"
+date: "October 3, 2019"
+
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    theme: united
+  html_notebook: default
+---
+
+# Problem 1
+
+## Problem 1a
+
+```{r}
+set.seed(100)
+```
+
+Let N be the number of crashes of a computer in an eight-hour working period.  We will model N as a Poisson random variable. The one parameter, lambda, is estimated as 4.
+
+The question asks for P(X > 4) = 1 - P(X <= 4)
+
+```{r}
+prob_1a <- 1 - ppois(4,4)
+prob_1a
+```
+
+## Problem 1b
+
+```{r}
+set.seed(100)
+```
+
+Let K be the number of programs affected for a randomly chosen
+crashed computer.  The pmf has values
+
+```{r}
+K <- c(1,2,3,4,5)
+```
+
+with probabilities
+
+```{r}
+pK <- c(dbinom(0,4,0.5),
+        dbinom(1,4,0.5),
+        dbinom(2,4,0.5),
+        dbinom(3,4,0.5),
+        dbinom(4,4,0.5)
+        )
+```
+
+## Problem 1c
+
+```{r}
+set.seed(100)
+```
+
+Here we use simulation to estimate the expectation:
+
+```{r}
+mean(
+  replicate(
+    1000,
+    sum(
+      sample(K,rpois(1,4),replace=TRUE,prob=pK)
+    )
+    )
+)
+```
+
+## Problem 1d
+
+```{r}
+set.seed(100)
+```
+
+```{r}
+mean(
+  replicate(
+    1000,
+    sum(
+      150*rnorm(1,30,15)*sample(K,rpois(1,4),replace=TRUE,prob=pK)
+    )
+    )
+)
+```
+
+## Problem 1e
+
+```{r}
+set.seed(100)
+```
+
+```{r}
+quantile(  replicate(
+    1000,
+    sum(
+      150*rnorm(1,30,15)*sample(K,rpois(1,4),replace=TRUE,prob=pK)
+    )
+    ),0.25)
+```
+
+
+# Problem 2
+
+## Problem 2a
+
+Let T be the time between consecutive arrivals
+
+lambda is estimated as 1/3 per minute
+
+## Problem 2b
+
+The problem is asking for P(T > 5) = 1-P(T<=5)
+
+```{r}
+1-pexp(5,1/3)
+```
+
+## Problem 2c
+
+Let M be the number of emails in the next hour
+
+M can be modeled as a Poisson random variable with mean 20
+
+We are looking for P(M>25) = 1-P(M<=25)
+
+```{r}
+1-ppois(25,20)
+```
+
+## Problem 2d
+
+N can be modeled as a poisson random variable with mean with mean 5/3
+
+We are looking for P(N=0)
+
+```{r}
+dpois(0,5/3)
+```
+
+## Problem 2e
+
+
+```{r}
+1-pexp(5,1/3)
+```
+
+## Problem 2f
+
+They are the same! This is not surprising at all.  They must be the same because the are modeling the same problem and we are calculating the probability of the same event. 
+

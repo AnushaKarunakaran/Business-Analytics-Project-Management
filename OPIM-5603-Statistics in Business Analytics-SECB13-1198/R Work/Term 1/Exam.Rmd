@@ -1,0 +1,171 @@
+---
+title: "R Notebook"
+author: "Anusha Karunakaran"
+date: "10/10/2019"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    theme: united
+  html_notebook: default
+  pdf_document: default
+name: Anusha Karunakaran
+---
+
+# Problem 1
+
+<pre>
+The problem can be solved by Conditional Probability.
+
+Let us assume that there are two events A and B where ,
+
+A is an event specifying an aircraft is present
+B is an event specifying the radar registers an aircraft is present 
+
+A' is an event specifying an aircraft is not present
+B' is an event specifying the radar registers an aircraft as not present
+
+Given :
+P(A) = 0.05
+
+P(B|A) = 0.98
+
+P(B|A') = 0.10
+
+The probability of an aircraft not present = 1 - P(A)
+                                           = 1 - 0.05
+                                           = 0.95
+                                          
+</pre>
+
+```{r}
+A_Complement <- 0.95
+B_Given_A_Complement <- 0.10
+# Since A Complement and B|A' are two independent events, 
+# The probability of false alarm = P(A')* P(B|A')
+
+False_ALarm <- A_Complement * B_Given_A_Complement
+False_ALarm
+
+```
+
+<pre>
+The probability that the radar falsely registers an aircraft is not present(miss detection) is:
+P(B'|A) = 1 - P(B|A)
+        = 1 - 0.98
+        = 0.02
+</pre>
+        
+        
+```{r}
+A <- 0.05
+B_Complement_Given_A <- 0.02
+# Since A and B'|A are two independent events, 
+# The probability of Missed Detection = P(A)* P(B'|A)
+Missed_Detection <- A * B_Complement_Given_A
+Missed_Detection
+```
+
+<pre>
+Solution:
+
+The probability of false alarm = 0.095
+The probability of missed detection = 0.001
+</pre>
+
+# Problem 2
+
+Store 1: (Poisson)
+1 person every 30 seconds
+
+Store 2: (Normal Distribution)
+Mean = 120
+S.D = 20
+
+Store 3: (Normal Distribution)
+Mean = 100
+S.D = 20
+
+
+## Problem 2.a
+```{r}
+lambda_2a <- 1 * 2 * 60
+Variance  <- sqrt(lambda_2a)
+Variance
+```
+
+## Problem 2.b
+```{r}
+Expected_Store1 <- 1 * 2 * 60
+Expected_Store2 <- dnorm(1,mean=120,sd=20)
+Expected_Store3 <- dnorm(1,mean=100,sd=20)
+Total_Expected_Value <- Expected_Store1 + Expected_Store2 + Expected_Store3
+Total_Expected_Value
+```
+
+## Problem 2.c
+
+```{r}
+Variance1 <- sqrt(1 * 2 * 60)
+Expected_Store2 <- dnorm(1,mean=120,sd=20)
+Expected_Store3 <- dnorm(1,mean=100,sd=20)
+
+```
+
+
+## Problem 2.d
+
+```{r}
+Store1_Prob <- dpois(1,24*2*60)
+Store1_Prob
+Store2_Prob <- dnorm(24,mean=120,sd=20)
+Store2_Prob
+
+# Store 2 is more
+```
+
+
+# Problem 3
+
+## Problem 3.a
+X = {0,1,2,3,4,....}
+As the value of X increases, the cumulative probability of a success approaches 1.
+
+## Problem 3.b
+
+Given:
+Success Probability (p) = 1/6
+
+Find:
+Expected Value
+
+```{r}
+# Expected Value
+p <- 1/6
+Expected_Value <- (1-p)/p
+Expected_Value
+
+# Expected Value using Simulation
+mean(rgeom(n = 10000,prob = p))
+```
+
+
+## Problem 3.c
+
+Given:
+Success Probability (p) = 1/6
+
+Find:
+Skewness
+
+```{r}
+# Skewness
+p <- 1/6
+Skewness <- (2-p)/(sqrt(1-p))
+Skewness
+
+#Skewness using Simulation
+
+```
+
+## Problem 3.d

@@ -1,0 +1,110 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    theme: united
+  html_notebook: default
+  pdf_document: default
+name: Sagarika Talla, Ravi Kumar Shiripurapu
+---
+
+
+# Problem 1
+
+## Problem 1c
+
+```{r}
+x <- 312/12
+x
+y <- round(x,2)
+y
+z <- ceiling(x)
+z
+```
+
+## Problem 1d
+
+```{r}
+cityNames = c("Shanghai","Beijing","Delhi","Karachi","Lagos","Tianjin")
+cityNames[2]
+```
+cityNames[2] is referring to the second element in the vector cityNames there by the output is "Beijing".
+
+```{r}
+population =c(26.32,21.54,18.98,14.91,17.5,10)
+area=c(2448,6490,573,1459,452,4541)
+population.density <- population/area
+print(population.density)
+```
+
+```{r}
+a <- c(12,17,18,1,2,6)
+b <- c(2,3,4)
+a/b
+```
+
+Even though vectors a and b have different lengths, the division operation is successful. When such a situation arises smaller length vector is repeated from its beginning to match the length of the other vector and the operation is performed. In this example, the fourth element in the vector a is divided by the first element in the vector b (as it exhausted by the third element and started with the first element).
+
+```{r}
+x.rand <- rnorm(100,10,3)
+mean(x.rand)
+sd(x.rand)
+```
+```{r}
+
+x.rand=c(rnorm(100,10,3))
+x.rand
+d=c(2,3)
+x.rand/d
+#The resulted 'x.rand' vector containing the 100 items are divided by '2' and '3' respectively on the odd and even positions according to the index similar to the above example of 'a' and 'b' where the 'd' vector runs for every two index in the 'x.rand' vector. 
+```
+# Problem 2 
+
+## Problem 2.a
+  
+The poll selected for this assignment tries estimate the percentage of US population that is unhappy about any one of three educational decisions (degree, field of study and institution); which concludes by saying around 49% of the population regrets any one decision . A further deep dive is conducted and it is found that ethnicity and the type of degree the subject has attained might be a significant reason for the unhappiness. 
+
+It is concluded that- 
+a. minorities have more reason to be unhappy rather than Caucasian population regarding the institution they have selected
+b. Minorites are different to their educational decision about the type of course that they have selected. 
+
+Article link - http://www.gallup.com/poll/216401/majority-minorities-regret-key-education-decision.aspx?g_source=Education&g_medium=newsfeed&g_campaign=tiles
+
+## Problem 2.b
+
+2. The population of interest comprises of individuals between the age of 18-65 across all 50 states and DC and is limited to the population that have an educational background with an experience of college life.
+
+## Problem 2.c
+
+3. The sample is collected for 131k individuals with a minimum quota rule of 70% cellphone and 30% landline respondents. The sample drawn for this experiment is approximately similar to the distribution that has been recorded by US census site, thereby sticking to a simple strata of sorts.
+Census cite https://www.census.gov/quickfacts/fact/table/US/PST045216
+
+## Problem 2.d
+
+4. A population parameter of interest in this case is the proportion of people in US that are unhappy with one of their three educational decisons.
+
+## Problem 2.e
+
+5. A sample statistic is used to estimate the population parameter where the proportion of people voting yes on the poll regarding their educational deision, is calculated with a margin of sampling error (+/- 1%)
+
+Sample statistic= Proportion of people insample who voted affirmative/Total sample size
+Sampling error= Z*sqr(p(i-p)/n)
+
+
+## Problem 2.f
+
+6. It is specified that the sampling technique used is simple random sampling but the experiment seems to be designed to represent the actual population by ethnicity indicating that they tried to follow the basic strata. 
+
+Although I agree with stratified sampling being the technique to be used, education and the level of satisfaction may not be limited to just ethnicity, but a variety of factors such as family, their level of income and state facilities and scholarships for higher education ( Stated so in article by Coy-Ogan,2009 below Page 72). Gallup polls adjust weights to region,race,edcational attaintent only.
+
+Cluster sampling and simple random sampling are alternative techniques that could have been considered, but cluster sampling would involve selecting a state that have very similar ethnic characteristics as the entire population making it easier for calls to be conducted by phone, assuming out of state call charges apply which would be avoided. Random sampling might bias with unequal ethnic distribution in the sample.
+
+Article link - http://digitalcommons.liberty.edu/cgi/viewcontent.cgi?article=1308&context=doctoral
+
+
+
+
+
+

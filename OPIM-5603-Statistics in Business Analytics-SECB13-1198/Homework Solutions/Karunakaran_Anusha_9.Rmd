@@ -1,0 +1,192 @@
+---
+title: "R Notebook"
+author: "Anusha Karunakaran"
+date: "11/13/2019"
+output:
+  html_document:
+  df_print: paged
+  toc: true
+theme: united
+html_notebook: default
+pdf_document: default
+name: Anusha Karunakaran
+---
+  
+  
+# Problem 1
+
+## Problem 1.a
+
+H0: The average length of games is less than 213 minutes.
+
+## Problem 1.b
+
+H1: The average length of games is greater than or equal to 213 minutes.
+
+## Problem 1.c
+
+We cannot directly use a parametric test unless we know that the means of the samples follow a normal distribution. We could use a shapiro test to determine with some confidence if the means follow a normal distribution. Based on the result, we can determine whether to use the parametric tests or not.
+
+## Problem 1.d
+<pre>
+Step 1: Hypotheses
+
+Ho: Mu >= 213
+H1: Mu < 213
+
+Step 2: Determine test
+
+T-test!
+
+Step 3: Calculate Test statistic
+</pre>
+
+```{r}
+BaseballData <- read.table("C:/Users/anush/Downloads/Coursework/OPIM-5603-Statistics in Business Analytics-SECB13-1198/Homework Solutions/Baseball Games.csv",header = TRUE,sep=",")
+Mu0 <- 213
+xBar <- mean(BaseballData$Time)
+n <- nrow(BaseballData)
+SE <- sd(BaseballData$Time)/sqrt(n)
+df <- n-1
+
+t.test.statistic <- (xBar - 213) / SE
+t.test.statistic
+```
+
+Step 4: Determine P-value
+
+```{r}
+pt(t.test.statistic, df)
+
+```
+
+
+## Problem 1.e
+
+
+```{r}
+# t-test
+TS <- (xBar - Mu0) / (SE)
+TS
+negative_Zalpha <- -1 * qt(0.99, df)
+print(paste("For t-test, ", round(TS,2), "that is lesser than ", round(negative_Zalpha,2), " will lead to rejection of the null hypothesis"))
+```
+
+Fail to reject the null hypothesis, since the P-value = 0.011  is greater than the alpha value of 0.01.
+
+  
+## Problem 1.f
+
+```{r}
+result <- wBoot::boot.one.per(BaseballData$Time, mean, null.hyp = 213, alternative = "less", conf.level =0.99)
+result
+```
+
+There's no significant difference in the results.
+  
+  
+## Problem 1.g
+
+H0:   80% of our games DO NOT end in 4 hours 
+H1:   80% of our games end in 4 hours 
+ 
+```{r} 
+library(wBoot) 
+percentile<-quantile(c(BaseballData$Time), probs = 0.8) 
+sampling_dist <- replicate(1000,quantile(sample(BaseballData$Time,size=length(BaseballData$Time),replace=TRUE),probs = 0.8))
+hist(sampling_dist)
+
+t.test(sampling_dist, Mu0 = 240 , alternative = "less", conf.level = 0.90)
+t.test(sampling_dist, mu0 = 240 , alternative = "less", conf.level = 0.98) 
+
+boot.one.per(sampling_dist,mean,null.hyp = 240,alternative = "less",type=NULL,R=9999,conf.level = 0.90)
+boot.one.per(sampling_dist,mean,null.hyp = 240,alternative = "less",type=NULL,R=9999,conf.level = 0.98)
+```
+ 
+ As we see that the p-value is very less in both the t-test as well as the bootstrapping, we reject H0. Hence, we can be 90% / 98% sure that 80% of our games finish within 4 hours. 
+
+# Problem 2
+
+## Problem 2.a
+
+
+```{r}
+projectTimes <- read.table("C:/Users/anush/Downloads/Coursework/OPIM-5603-Statistics in Business Analytics-SECB13-1198/Homework Solutions/ProjectCompletionTimes.csv",header = TRUE,sep=",")
+shapiro.test(projectTimes$Team1CompletionTime)
+t.test(projectTimes$Team1CompletionTime, projectTimes$Team2CompletionTime, paired = FALSE)
+```
+
+<pre>
+Is there statistical evidence to conclude that the mean completion times for projects for the
+teams of each of the managers is different? - NO
+Failed to reject the null hypothesis  since the difference in mean is 0.
+</pre>
+  
+  
+## Problem 2.b
+
+```{r}
+library(wBoot)
+boot.two.per(na.omit(projectTimes$Team1CompletionTime), projectTimes$Team2CompletionTime, median, null.hyp = 0, stacked = FALSE)
+```
+
+<pre>
+Is there statistical evidence to conclude that the median completion times for projects for the
+teams of each of the managers is different? - NO
+Failed to reject the null hypothesis  since the difference in medians is 0.
+</pre>
+
+## Problem 2.c  
+
+Variance test requires that both the samples to be normally distributed. Therefore, run the shapiro test on both the samples.
+
+```{r}
+shapiro.test(projectTimes$Team1CompletionTime)
+shapiro.test(projectTimes$Team2CompletionTime)
+```
+
+Clearly, we fail to reject the null hypothesis which means that both the variables follow normal distribution. 
+
+```{r}
+var.test(na.omit(projectTimes$Team1CompletionTime), projectTimes$Team2CompletionTime)
+```
+
+<pre>
+Is there statistical evidence to conclude that the ratio of the variance of the completion times
+for projects for the teams of each of the employees is different? - NO
+Failed to reject the null hypothesis  since the true ratio of variances of the completion times is equal to 1
+</pre>
+  
+# Problem 3
+  
+An engineer measured the Brinell hardness of 25 pieces of ductile iron that were subcritically annealed.The engineer hypothesized that the mean Brinell hardness of all such ductile iron pieces is greater than 170. Therefore, he was interested in testing the hypotheses:
+
+H0 : μ = 170
+H1:  μ > 170
+
+```{r}
+BrinellData <- read.table("C:/Users/anush/Downloads/Coursework/OPIM-5603-Statistics in Business Analytics-SECB13-1198/Homework Solutions/Brinell Hardness.csv",header = TRUE,sep=",")
+hist(BrinellData$Score)
+Density <- density(BrinellData$Score)
+plot(Density)
+Mu0 <- 170
+xBar <- mean(BrinellData$Score)
+xBar
+n <- nrow(BrinellData)
+n
+SE <- sd(BrinellData$Score)/sqrt(n)
+SE
+df <- n
+
+t.test.statistic <- (xBar - 170) / SE
+t.test.statistic
+
+#p value
+pt(t.test.statistic, df)
+
+```
+
+Since the P-value, 0.883, is greater than  = 0.05, the engineer fails to reject the null hypothesis.
+
+Since the engineer's test statistic, t* = 1.22, is not greater than 1.7109, the engineer fails to reject the null hypothesis. That is, the test statistic does not fall in the "critical region." There is insufficient evidence, at the  = 0.05 level, to conclude that the mean Brinell hardness of all such ductile iron pieces is greater than 170.
+

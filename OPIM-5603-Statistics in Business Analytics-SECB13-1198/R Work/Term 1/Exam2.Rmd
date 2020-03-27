@@ -1,0 +1,163 @@
+---
+title: "R Notebook"
+author: "Anusha Karunakaran"
+date: "12/05/2019"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    theme: united
+  html_notebook: default
+  pdf_document: default
+name: Anusha Karunakaran
+---
+
+
+# Problem 1
+
+```{r}
+# Load the data
+library(readxl)
+Data <- read_xlsx("C:\\Users\\anush\\ResidentialBuildingData.xlsx") 
+
+# Inspect and summarize the data
+head(Data,5)
+
+str(Data)
+summary(Data)
+```
+
+<b> Building the model </b>
+We want to build a model for estimating sales based on the budget invested as follow:
+
+```{r}
+#Building the model for predicting Actual Construction Costs
+model <- lm(Data$`V-10` ~ Data$`V-4`+ Data$`V-5` + Data$`V-6`+ Data$`V-21`+ Data$`V-22` )
+summary(model)
+```
+
+<b> Interpretation> </b>
+The first step in interpreting the multiple regression analysis is to examine the F-statistic and the associated p-value, at the bottom of model summary.
+
+To see which predictor variables are significant, you can examine the coefficients table, which shows the estimate of regression beta coefficients and the associated t-statitic p-values:
+
+```{r}
+#Interpretation
+summary(model)$coefficient
+```
+
+
+As theV-22 variable is not significant, it is possible to remove it from the model:
+
+```{r}
+model <- lm(Data$`V-10` ~ Data$`V-4`+ Data$`V-5` + Data$`V-6`+ Data$`V-21` )
+summary(model)
+```
+
+
+<b> Confidence Interval </b>
+
+The confidence interval of the model coefficient can be extracted as follow:
+```{r}
+confint(model)
+```
+
+<b> Model accuracy assessment </b> 
+
+The overall quality of the model can be assessed by examining the R-squared (R2) and Residual Standard Error (RSE).
+```{r}
+summary(model)$r.squared
+summary(model)$adj.r.squared
+```
+
+The RSE estimate gives a measure of error of prediction. The lower the RSE, the more accurate the model (on the data in hand).
+
+The error rate can be estimated by dividing the RSE by the mean outcome variable:
+```{r}
+sigma(model)/mean(Data$`V-10`)
+```
+
+# Problem 5
+
+
+```{r}
+library(MASS)
+```
+
+## Problem 5.a 
+
+```{r}
+car_reg <- lm(MPG.highway ~ MPG.city,data=Cars93)
+summary(car_reg)
+```
+
+## Problem 5.b 
+
+Yes, Both the coefficients are significant at the 95% confidence interval.
+
+```{r}
+car_reg$coefficients
+```
+
+
+
+## Problem 5.c 
+
+```{r}
+summary <- summary(car_reg)
+summary$r.squared
+summary$adj.r.squared
+```
+
+
+R-squared measures the proportion of the variation in your dependent variable (Y) explained by your independent variables (X) for a linear regression model. 
+
+Adjusted R-squared adjusts the statistic based on the number of independent variables in the model.
+
+
+## Problem 5.d 
+
+```{r}
+n <- 
+p <- 
+ans$adj.r.squared <- 1 - (1 - summary$r.squared) * ((n - 1)/(n -p -1))
+```
+
+## Problem 5.e 
+
+```{r}
+SSR = sum((fitted(car_reg)-mean(Cars93$MPG.highway))^2)
+SSE = sum((fitted(car_reg)-Cars93$MPG.highway)^2)
+SST = SSE+SSR
+```
+
+SSR - Regression Sum of Squares
+SSE - Error Sum of Squares
+SST - Total Sum of Squares
+
+
+##Problem 5.f
+
+```{r}
+test_data <- data.frame(MPG.city = 16)
+predict(car_reg,test_data)
+```
+
+The expected MPG.highway for MPG.city = 16 is 23.38533
+
+## Problem 5.g
+
+```{r}
+test_data <- data.frame(MPG.city = 16)
+predict(car_reg,test_data,level=0.95)
+```
+
+## Problem 5.h
+
+```{r}
+
+```
+
+
+
+

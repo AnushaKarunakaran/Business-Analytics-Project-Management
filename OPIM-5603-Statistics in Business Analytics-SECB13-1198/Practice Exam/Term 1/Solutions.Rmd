@@ -1,0 +1,431 @@
+---
+title: "Exam1Solution"
+output: html_notebook
+---
+
+# Problem 1
+
+Let the students be designated by 1, 2, 3.
+
+Let A be the event that student 1 enroll
+Let B be the event that student 2 enroll
+Let C be the event that student 3 enroll
+
+```{r}
+pA = 1.0
+pB = 0.3
+pC = 0.6
+```
+
+
+## Problem 1a
+
+Let X be the number of students that enroll
+
+X can take values 1, 2, 3
+
+```{r}
+xValues = c(1,2,3)
+```
+
+
+X = 1 if and only if student 2 and 3 do not enroll
+X = 3 if and only if student 2 and 3 do enroll
+X = 2 otherwise
+
+```{r}
+p1 = (1-pB)*(1-pC)
+p3 =pB*pC
+p2 = 1 - p1 - p3
+xProb = c(p1,p2,p3)
+print(xProb)
+```
+
+
+## Problem 1b
+
+
+```{r}
+xProb[2] + xProb[3]
+```
+
+## Problem 1c
+
+```{r}
+sum(xProb * xValues)
+```
+
+## Problem 1d
+
+There are 4 possibilities, and so we find the average GPA for each possibility and the probability
+
+
+```{r}
+gpas = c(3.3,3.9,3.8)
+```
+
+
+Case 1: Only student 1
+
+
+```{r}
+prob_1 = pA * (1-pB) * (1-pC)
+avg_gpa_1 = gpas[1]/1
+```
+
+Case 2: Student 1 and student 2 only 
+
+```{r}
+prob_2 = pA * pB * (1-pC)
+avg_gpa_2 = (gpas[1]+gpas[2])/2
+```
+
+Case 3: Student 1 and student 3 only 
+
+```{r}
+prob_3 = pA * (1-pB) * pC
+avg_gpa_3 = (gpas[1]+gpas[3])/2
+```
+
+Case 4: Student 1, student 2, and student 3
+
+```{r}
+prob_4 = pA * pB * pC
+avg_gpa_4 = (gpas[1]+gpas[2] + gpas[3])/3
+```
+
+Expected values is sum of probs times values
+
+```{r}
+prob_1 * avg_gpa_1 + prob_2 * avg_gpa_2 + prob_3 * avg_gpa_3 + prob_4 * avg_gpa_4
+```
+
+## Problem 1e
+
+Change the inputs:
+
+```{r}
+pA = 1.0
+pB = 0.3
+pC = 0.8
+```
+
+
+We don't know the gpa, but let's first test with what we had before
+
+```{r}
+possibleGPA = 3.8
+gpas = c(3.3,3.9,possibleGPA)
+```
+
+Lets calculate expected GPA
+
+
+```{r}
+prob_1 = pA * (1-pB) * (1-pC)
+avg_gpa_1 = gpas[1]/1
+prob_2 = pA * pB * (1-pC)
+avg_gpa_2 = (gpas[1]+gpas[2])/2
+prob_3 = pA * (1-pB) * pC
+avg_gpa_3 = (gpas[1]+gpas[3])/2
+prob_4 = pA * pB * pC
+avg_gpa_4 = (gpas[1]+gpas[2] + gpas[3])/3
+prob_1 * avg_gpa_1 + prob_2 * avg_gpa_2 + prob_3 * avg_gpa_3 + prob_4 * avg_gpa_4
+```
+
+Before it was 3.507, so this is still OK!  But, we want the minimum, so we guess and check (you can also solve this analytically)
+
+```{r}
+possibleGPA = 3.6917
+gpas = c(3.3,3.9,possibleGPA)
+prob_1 = pA * (1-pB) * (1-pC)
+avg_gpa_1 = gpas[1]/1
+prob_2 = pA * pB * (1-pC)
+avg_gpa_2 = (gpas[1]+gpas[2])/2
+prob_3 = pA * (1-pB) * pC
+avg_gpa_3 = (gpas[1]+gpas[3])/2
+prob_4 = pA * pB * pC
+avg_gpa_4 = (gpas[1]+gpas[2] + gpas[3])/3
+prob_1 * avg_gpa_1 + prob_2 * avg_gpa_2 + prob_3 * avg_gpa_3 + prob_4 * avg_gpa_4
+```
+
+
+Approximately 3.6917
+
+
+# Problem 2
+
+Let A be the event that a randomly chosen motherboard is provided by company X
+Let B be the event that a randomly chosen motherboard is provided by company Y
+Let C be the event that a randomly chosen motherboard is provided by company Z
+
+```{r}
+pA = 0.75
+pB = 0.2
+pC = 0.05
+```
+
+Let D be the event that a randomly chosen motherboard is defective
+
+```{r}
+pD_givenA = 0.04
+pD_givenB = 0.03
+pD_givenC = 0.024
+```
+
+## Problem 2a
+
+This is asking for P(D)
+
+```{r}
+pD = pD_givenA * pA + pD_givenB * pB + pD_givenC * pC 
+pD
+```
+
+## Problem 2b
+
+Asking for P(C|D) = p(C and D)/p(D) = p(D|C)*P(C)/p(D)
+
+```{r}
+pC_givenD = pD_givenC*pC / pD
+pC_givenD
+```
+
+# Problem 3
+
+Number of trouts caught each day is a Poisson distribution with lambda=18
+Number of pampanos caught each day is a Binomial distribution with n=12 and p=0.7
+
+Cost of scaling trout is normally distributed with mean = 1 and sd = 0.1
+Cost of scaling pampano is uniformly distributed with min = 1 and max = 1.25
+
+Revenue from selling a trout is uniformly distributed with min = 15 and max = 22
+Revenue from selling a trout is uniformly distributed with min = 22 and max = 27
+
+```{r}
+lambda <- 18
+n <- 12
+p <- 0.7
+P_T_throw<-0.1
+P_P_throw<-0.2
+
+T_scale_cost_mean <- 1
+T_scale_cost_sd <- 0.1
+P_scale_cost_min <- 1
+P_scale_cost_max <- 1.25
+
+P_T_purchase <- 0.9
+P_P_purchase <- 0.85
+
+T_rev_min <- 15
+T_rev_max <- 22
+
+P_rev_min <- 22
+P_rev_max <- 27
+```
+
+## Problem 3a
+Expected number of fish caught = E_trout (Poisson) + E_pampano (Binomial)
+```{r}
+lambda + n*p
+```
+
+## Problem 3b
+Number of trouts that are not thrown away can be modeled using a binomial distribution 
+  with n = no. of trouts caught (from Poisson)
+       p = 1 - Prob of throwing away a trout fish
+
+Number of pampanos that are not thrown away can be modeled using a binomial distribution 
+  with n = no. of pampanos caught (from Binomial)
+       p = 1 - Prob of throwing away a pampano fish
+
+Number of trouts that are sold can be modeled using a binomial distribution 
+  with n = no. of trouts remaining after satisfying weight requirements
+       p = Prob of a trout fish being purchased
+
+Number of pampanos that are sold can be modeled using a binomial distribution 
+  with n = no. of pampanos remaining after satisfying weight requirements
+       p = Prob of a pampano fish being purchased
+
+Since some fish are thrown back into the ocean, only those that are not thrown away are scaled.
+
+```{r}
+mean(replicate(10000,
+          rbinom(1,rbinom(1,rpois(1,lambda),1-P_T_throw),P_T_purchase) + 
+          rbinom(1,rbinom(1,rbinom(1,n,p),1-P_P_throw),P_P_purchase)
+          )
+    )
+```
+
+## Problem 3c
+The number of fish that remain after satisfying weight requirements becomes the first argument for rnorm as the cost of scaling each fish varies uniformly.
+
+```{r}
+cost<-replicate(10000,
+          sum(rnorm(rbinom(1,rpois(1,lambda),1-P_T_throw),T_scale_cost_mean,T_scale_cost_sd)) + sum(runif(rbinom(1,rbinom(1,n,p),1-P_P_throw),P_scale_cost_min,P_scale_cost_max))
+ )
+
+mean(cost)
+```
+
+## Problem 3d
+```{r}
+sum(cost>23)/length(cost)
+```
+
+## Problem 3e
+
+To simulate for the daily operating revenue, we need to simulate the operating revenue for one random day and iterate the process to generate a distribution.
+
+```{r}
+op_rev<-vector(mode = "numeric")
+
+for (i in 1:10000){
+ T_before_purchase<-rbinom(1,rpois(1,lambda),1-P_T_throw)
+ T_sold<-rbinom(1,T_before_purchase,P_T_purchase)
+
+ P_before_purchase<-rbinom(1,rbinom(1,n,p),1-P_P_throw)
+ P_sold<-rbinom(1,P_before_purchase,P_P_purchase) 
+ 
+ op_rev_iter <-
+ (
+  sum(runif(T_sold,T_rev_min,T_rev_max))
+  +
+  sum(runif(P_sold,P_rev_min,P_rev_max))
+  -
+  sum(rnorm(T_before_purchase,T_scale_cost_mean,T_scale_cost_sd))
+  -
+  sum(runif(P_before_purchase,P_scale_cost_min,P_scale_cost_max))
+ )
+ 
+ op_rev <- c(op_rev,op_rev_iter)
+}
+
+
+var(op_rev)
+
+```
+
+
+
+
+# Problem 4
+
+
+Let D be the event that a randomly chosen person has the disease
+
+Let T be the event that a randomly chosen person tests positive for the disease
+
+We are given:
+
+P(T|D) = 0.95
+P(T|notD) = 0.01
+P(D) = 0.005
+
+## Problem 4a
+
+The problem asks for P(T)
+
+```{r}
+pT_givenD = 0.05
+pT_givenNotD = 0.01
+pD = 0.005
+pNotD = 1-pD
+pT = pT_givenD*pD + pT_givenNotD*pNotD
+pT
+```
+
+## Problem 4b
+
+Asking for P(D|T) = P(D and T)/P(T) = P(T|D)*P(D) / P(T)
+
+```{r}
+pD_givenT = pT_givenD*pD / pT
+pD_givenT
+```
+
+
+## Problem 4c
+
+Asking for P(notD|notT) = P(notD and notT) / P(notT) 
+                        = (P(notT|notD)*p(notD)  )/ (1-p(notT))
+                        = ((1-P(T|notD))*p(notD)  )/ (1-p(notT))
+                        
+```{r}
+pNotD_givenNotT = ( (1-pT_givenNotD) * pNotD ) / (1-pT)
+pNotD_givenNotT
+```
+
+
+# Problem 5
+
+## Problem 5a
+
+False.  Take a uniform between 0 and 0.1
+
+## Problem 5b
+
+True. The pmf gives probabilities.
+
+## Problem 5c
+
+False.  They are collectively exhaustive (one must happen) and mutually exclusive (they cannot both happen)
+
+## Problem 5d
+
+Question discarded
+
+## Problem 5e
+
+True. If P(B) = 1, then P(A | B) = P(A)
+
+# Problem 6
+
+
+## Problem 6.a
+
+```{r}
+n = 10
+pi = 0.4
+```
+
+```{r}
+mean_Y = n*pi
+sd_y = n*pi*(1-pi)
+cv_y = sd_y / mean_Y * 100
+```
+
+## Problem 6.b
+
+```{r}
+stocks_df <- read.csv("Data/stocks.csv")
+```
+
+
+## Problem 6.c
+
+```{r}
+n = length(stocks_df$A)
+print(n)
+```
+
+```{r}
+cv_est_A <- (1+1/(4*n))*sd(stocks_df$A)/mean(stocks_df$A)
+cv_est_B <- (1+1/(4*n))*sd(stocks_df$B)/mean(stocks_df$B)
+```
+
+## problem 6.d
+
+```{r}
+library(raster)
+rand_vals <- rnorm(10,10,1)
+cv(rand_vals)
+```
+
+```{r}
+est_cv <- (1+1/40)*sd(rand_vals)/mean(rand_vals)*100
+print(est_cv)
+```
+
+
+No! The values are a bit differnet

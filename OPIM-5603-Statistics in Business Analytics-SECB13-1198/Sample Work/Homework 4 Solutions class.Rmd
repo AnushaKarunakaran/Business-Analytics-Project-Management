@@ -1,0 +1,246 @@
+---
+title: "Homework 4 Solutions"
+output: html_notebook
+---
+# Problem 1
+Let X be the random variable of the number of students that matriculate
+This can be modeled as a binomial distribution with success probability (matriculation), p = 0.15
+```{r}
+p<-0.15
+```
+
+## Problem 1a
+The expected value of the random variable X is given by E(X) = np
+```{r}
+n<-1000
+n*p
+```
+
+## Problem 1b
+The standard deviation of the random variable X is given be sigma = sqrt(np*(1-p))
+```{r}
+sqrt(n*p*(1-p))
+```
+
+## Problem 1c
+Let us examine what information is given. The university wants at most 160 students to matriculate. Also, since it is given that the university wants to be 99.5% sure, they want the probability of at most 160 students matriculating to be 0.995
+Hence, it is given that P(X<=160) = 0.995
+To find: Sample size (n) for which this happens
+
+Let us first assume n=1000 and calculate the maximum number of students matriculating with 99.5% certainity
+```{r}
+qbinom(p = 0.995,size = 1000,prob = 0.15)
+```
+This is higher than what we need. Now, let us try n=900
+```{r}
+qbinom(p = 0.995,size = 900,prob = 0.15)
+```
+This is very close to what we need. Now, let us try n=875
+```{r}
+qbinom(p = 0.995,size = 875,prob = 0.15)
+```
+This is lesser than what we need but extremely close as well! Now, let us try n=880
+```{r}
+qbinom(p = 0.995,size = 880,prob = 0.15)
+```
+We get 160 for n=880. However, the question asks for the maximum number of students that they can offer admission to.
+Hence, let us try n=881 to n=885
+```{r}
+qbinom(p = 0.995,size = 881,prob = 0.15)
+qbinom(p = 0.995,size = 882,prob = 0.15)
+qbinom(p = 0.995,size = 883,prob = 0.15)
+qbinom(p = 0.995,size = 884,prob = 0.15)
+qbinom(p = 0.995,size = 885,prob = 0.15)
+```
+We see that we get 160 until n=883 after which it crosses 160. Hence, the required sample size is n=883
+
+# Problem 2
+Given:
+The maximum number of passengers the flight can have (capacity) = 70
+The probability that a passenger shows up (p) =  0.93
+Therefore, the probability that a passenger does not show up (1-p) = 1-0.93 = 0.07
+
+It is also given that the flight is overbooked with n = 73
+
+Let X be a random variable of the number of passengers who make a reservation and show up
+X can be modeled using a binomial distribution with n =73 and p = 0.93
+```{r}
+capacity <- 70
+p<-0.93
+n<-73
+```
+
+## Problem 2a
+The situation where more people show up than the airplane has capacity for happens when X=71 or X=72 or X=73
+Hence, To find: P(X>70) = 1 - P(X<=70)
+```{r}
+1 - pbinom(q = capacity,size = n,prob = p)
+```
+
+## Problem 2b
+90% of capacity = 0.9*70 = 63
+Since we want fewer than 90% of seats to be occupied, the required probability is P(X<63) = P(x<=62)
+```{r}
+pbinom(0.9*capacity - 1,size = n,prob = p)
+```
+## Problem 2c
+The expected number of passengers that show up is given by E(X) = np
+```{r}
+n*p
+```
+Although the value is not a whole number, it should not be rounded to the nearest whole number since the expected value of a random variable taking integer values need not be a whole number as it is a measure of central tendency.
+
+## Problem 2d
+If X is a random variable for the number of passengers who make a reservation and show up,
+then let Y be a random variable for the amount of money paid to customers who are turned away.
+Y can be defined as Y = {200*(x-70) if x>70; 0 otherwise}
+For n = 73, 
+the values that Y can take are {0 if x<=70; 200 if x=71; 400 if x=72; 600 if x=73} and the associated probabilities for these values of Y are {P(X<=70) if x<=70; P(X=71) if x=71; P(X=72) if x=72; P(X=73) if x=73}
+
+Hence, the expected value of the amount of money paid to customers who are turned away (Y) is given by the sum of the product of the values of Y and their corresponding probabilities.
+```{r}
+Y<-c(0,200,400,600)
+prob<-c(pbinom(70,n,p),dbinom(71,n,p),dbinom(72,n,p),dbinom(73,n,p))
+sum(Y*prob)
+```
+
+## Problem 2e
+
+Now to find the tickets with the maximum expected revenue, we will pass the number of expected tickets throught a loop / perform a binary search for each case , and calculate the expected value of the Discreate PMF from 1 to X where X is the number of tickets considered. 
+
+For 71 tickets we will have 
+P(1)X 150 + P(2) X 300 .... P(70)X150X70 + P(71)X 71X (150) - dbinom(71) *200
+
+Similary
+
+```{r}
+a<-seq(71,90,1)
+
+for(i in 1:length(a))
+{
+n_tix_sold<-a[i]
+num_show_up <- seq(0,n_tix_sold)
+pmf_num_show_up <- dbinom(num_show_up,size=n_tix_sold,prob=0.93)
+
+profit_for_first_70_values <- 150*seq(0,70)
+
+profit_for_next_X_values <- -50*seq(n_tix_sold-70,1) + 70*150
+
+profit_for_all_values = c(profit_for_first_70_values,profit_for_next_X_values)
+
+expected_profit <- sum(pmf_num_show_up*profit_for_all_values)
+print(paste(a[i],expected_profit))
+}
+```
+
+## Problem 2f
+Given:
+n = 73
+p = 0.93
+A - 70 seats are occupied => 70 passengers have shown up for sure => the number of people who actually showed up could be 70 or more (X = 70,71,72,73)
+
+To find:
+P(X>70|A)
+```{r}
+(1-pbinom(capacity,n,p))/(1-pbinom(69,n,p))
+```
+
+## Problem 2g
+Let X be a random variable of the number of economy passengers who make a reservation and show up
+Let Y be a random variable of the number of business passengers who make a reservation and show up
+
+Given:
+The probability of business class passengers showing up (p_bus) = 0.75
+The probability of economy class passengers showing up (p_econ) = 0.93
+
+There are 4 business class seats and 66 economy class seats and that the airline has oversold 2 business class seats and 2 economy seats. 
+
+Hence, n_bus = 6
+n_econ = 68
+n_total = 68 + 6 = 74
+
+Now, there are 3 cases where n_total > 72
+They are as follows:
+
+Case 1: 68 economy and 6 business passengers turn up => P(X=68)*P(Y=6)
+Case 2: 68 economy and 5 business class passengers turn up => P(X=68)*P(Y=5)
+Case 3: 67 economy and 6 business class passengers turn up => P(X=67)*P(Y=6)
+
+To find:
+P(X > 72) = P(Case 1) + P(Case 2) + P(Case 3) 
+```{r}
+n_bus <- 6
+n_econ <- 68
+p_bus <- 0.75
+p_econ <- 0.93
+
+P_case1 <- dbinom(68,n_econ,p_econ)*dbinom(6,n_bus,p_bus)
+P_case2 <- dbinom(68,n_econ,p_econ)*dbinom(5,n_bus,p_bus)
+P_case3 <- dbinom(67,n_econ,p_econ)*dbinom(6,n_bus,p_bus)
+
+P_case1 + P_case2 + P_case3
+```
+
+
+# Problem 3
+## Problem 3a
+X = {0,1,2,3,4,....}
+As the value of X increases, the cumulative probability of a success approaches 1.
+
+## Problem 3b
+X = 0 means that we get a 3 in the first roll of the die. The probability of that happening is 1/6 which is the success probability itself.
+
+## Problem 3c
+X = 1 means that we do not get a 3 in the first roll AND we get a 3 in the second roll. Hence, we require the joint probability of these two events. 
+Since the probability that we do not roll a 3 is 5/6, 
+P(X=1) = (5/6)*(1/6) = 5/36
+
+## Problem 3d
+X = 2 means that we do not get a 3 in the first two rolls AND we get a 3 in the third roll. Hence, we require the joint probability of these three events. 
+
+P(X=2) = (5/6)*(5/6)*(1/6) = 25/216
+
+## Problem 3e
+```{r}
+# P(x=0)
+dgeom(x = 0,prob = (1/6))
+# P(x=1)
+dgeom(x = 1,prob = (1/6))
+# P(x=2)
+dgeom(x = 2,prob = (1/6))
+```
+
+## Problem 3f
+If the 11th customer buys a computer, it means 10 customers before him did not buy a computer.
+```{r}
+dgeom(x = 10,prob = 0.03)
+```
+
+## Problem 3g
+```{r}
+?pgeom
+#P(X>=30)
+1 - pgeom(q = 29,prob = 0.03)
+
+1 - pbinom(29,30,0.97)
+dbinom(30,30,0.97)
+```
+This represents the nature of random variables that can be represented as two different distributions for a particular phenomenon. This can be written as 
+X - a geom random variable for the number of people who enter the store and not buy 
+Y - a binom random variable for the number of people who dont buy a laptop 
+Both X and Y can explain the probability that the first 30 customers will not buy
+
+## Problem 3h
+```{r}
+p<-0.03
+expected_customers <- (1-p)/p
+expected_customers
+var_customers <- (1-p)/(p^2)
+var_customers
+```
+
+## Problem 3i
+```{r}
+mean(rgeom(n = 10000,prob = 0.03))
+```
+Yes, the arithmetic mean of the generated distribution roughly coincides with the expected value in 3h. This is because the generated distribution is a geometric distribution and since the number of values is large enough, the sample mean is very close to the population mean. 

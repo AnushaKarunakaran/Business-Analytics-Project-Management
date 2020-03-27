@@ -1,0 +1,330 @@
+---
+title: "html_document"
+author: "Aman Manawat"
+date: "09/18/18"
+output:
+  html_document:
+    df_print: paged
+    
+---
+
+# Problem 1 
+
+## Problem 1.a 
+
+```{r}
+# argue that  A =  (A??????B)??????(A??????B')
+
+# To prove this let say there is a case 'x' which belongs to A, that is x??????A
+
+# Now we have to prove that x ?????? A(??????B)??????(A??????B')
+
+# now, let us assume x ?????? A(??????B)??????(A??????B')
+
+# => (x  ??????  A  and x  ?????? B) or  (x ??????A and  x??????B')
+
+# => x??????A and (x??????B or  x??????B')
+
+# => x??????A and x??????(B or B')
+
+# => x??????A and Universe  (By property of universe)
+
+# => x??????A  
+
+# hence, since we got x??????A, we can say that the argument A =  (A??????B)??????(A??????B'), stands true
+
+```
+
+
+
+## Problem 1.b 
+
+
+```{r}
+
+# Argue that A??????B = A??????(B??????A')
+
+# To prove this let say there is a case 'x' which belongs to A??????B, that is x??????A??????B
+
+# Now we have to prove that x ?????? A??????(B??????A')
+
+# now, let us assume x ?????? A??????(B??????A')
+
+# => x??????A or (x??????B and x??????A')
+
+# => (x??????A or x??????B) and  (x??????A or x??????A')
+
+# => x??????(A or B) and x??????(A or A')
+
+# => x??????(A or B) and Universe (By Universe property)
+
+# => x??????(A or B)
+
+# hence, since we got x??????(A or B), we can say that the argument A =  A??????B = A??????(B??????A'), stands true
+
+```
+
+
+## Problem 1.c
+
+### Problem 1.c.(a)
+
+```{r}
+
+# given P(A) = 1
+
+# find P(A|B) 
+
+# By conditional probablity we can write P(A|B) = P(A and B) / P(B)    -- step 1
+
+# Since, we know that P(A and B) = P(A) + P(B) - P(A or B)
+
+# so step 1 becomes, P(A|B) = (P(A) + P(B) - P(A OR B))/ P(B)  -- step 2
+
+# since, given P(A) = 1
+
+# so step 2 becomes, P(A|B) = (1+P(B) - 1)/ P(B)
+
+# => P(A|B) = P(B)/P(B)
+
+# => P(A|B) = 1 
+
+```
+
+
+### Problem 1.c.(b)
+
+```{r}
+
+# given P(A) = 1
+
+# find P(A'|B) 
+
+# By conditional probablity we can write P(A|B) = P(A' and B) / P(B)    -- step 1
+
+# => P(A'|B) = P(B and (1 -A))/P(B) -- since P(A') = 1 - P(A)
+
+# => P(A'|B) = (P(B) - P(B AND A))/P(B)
+
+# => P(A'|B) = (P(B) - P(B) -P(A) + P(A OR B))/ P(B) 
+
+# => P(A'|B) = (-1+1)/P(B)
+
+# => P(A'|B) = 0 
+```
+
+
+### Problem 1.c.(c)
+
+```{r}
+# given P(A) = 1
+
+# find P(B|A) 
+
+# By conditional probablity we can write P(B|A) = P(B and A) / P(A)    -- step 1
+
+# Since, we know that P(A and B) = P(A) + P(B) - P(A or B)
+
+# so step 1 becomes, P(B|A) = (P(A) + P(B) - P(A OR B))/ P(A)  -- step 2
+
+# since, given P(A) = 1
+
+# so step 2 becomes, P(A|B) = (1+P(B) - 1)/ 1
+
+# => P(A|B) = P(B)
+
+```
+
+
+### Problem 1.c.(d)
+
+```{r}
+
+# given P(A) = 1
+
+# find P(B|A') 
+
+# By conditional probablity we can write P(B|A') = P(B and A') / P(A')    -- step 1
+
+# now P(A') = 1 - P(A) = 1-1 = 0
+
+# subtituting that in step 1 we get P(B|A') = P(B AND A') / 0
+
+# => P(B|A') = Not defined (infinite)
+
+```
+
+
+
+# Problem 2 
+
+## Problem 2.a 
+
+```{r}
+
+```
+
+
+## Problem 2.b
+
+```{r}
+# given  P(A) = 0.1,P(B) = 0.2, and P(C) = 0.3
+
+# find range for P(A??????B??????C)
+
+# by using inclusion and exclusion prinicple P(A??????B??????C) = P(A) + P(B) + P(C)??????P(A??????B)??????P(A??????C)??????P(B??????C) + P(A??????B??????C) 
+  
+  # range will be maximum when all events will be mutually exclusive, then P(A??????B)=P(A??????C)=P(B??????C)=P(A??????B??????C)=0
+  
+  # so, P(A??????B??????C) = P(A) + P(B) + P(C) = 0.1+0.2+0.3 = 0.6
+  
+# Range will be minimum when event A will be subset of event B and C and event B will also be a subset of event C
+
+# subtituting the values in step 1, we get as below
+
+# P(A??????B??????C)  =  0.1 + 0.2 + 0.3 - 0.1 - 0.1 - 0.2 + 0.1=0.3
+
+# so range is 0.3 to 0.6
+
+```
+
+
+## Problem 2.c
+
+```{r}
+
+# find P(A??????B??????C)   
+
+# given A, B and C are mutually independent events, then using inclusion and exclusion principle, we get 
+# P(A??????B??????C)  =  0.1 + 0.2 + 0.3 -(0.1)*(0.2) -(0.1)(0.3) - (0.2)*(0.3) + (0.1)*(0.2)(0.3)
+
+# P(A??????B??????C)  =  .6 - 0.02 - 0.03 - 0.06 + 0.006
+
+# P(A??????B??????C)  =  0.496
+```
+
+## Problem 2.d
+
+```{r}
+# find P(A??????B??????C)   
+
+# given A and C are mutually exclusive events then P(A and C) = 0
+# given A and B are independent events then p(A and B) = P(A) * P(B)
+# given C and B are independent events then p(C and B) = P(C) * P(B)
+
+# then using inclusion and exclusion principle, we get
+
+# P(A??????B??????C) = 0.1 +0.2+0.3 -(0.1)*(0.2) - (0.2)*(0.3) + 0
+
+# P(A??????B??????C) = 0.52
+
+
+```
+
+
+## Problem 2.e 
+
+```{r}
+# It is possible to design an experiment and a set of events for which A is independent of B, A is independent of C, B is independent of C, but A is not independent of B and C. 
+
+# let us take a case of rolling two dices, one of color blue and other of color black. 
+# Now, let A: be an event of getting the sum of the two faces to be even
+#          B: be an event of getting an even number on the face of blue dice 
+#          C: be an event of getting an even number on the face of black dice
+
+# Now as we can see event A is independent of B and indenpendent of C, and event B is independent of C, but the event A of getting the sum of the two faces of the dice to be even is dependent both on event B and C. If the event in either B or C fails then, event A fails, which means we will not get sum of the two faces to be even. 
+```
+
+
+
+# Problem 3 
+
+## Problem 3.a 
+
+```{r}
+
+# Let P(L) denotes probablity of clicking on a link and let P(Y) denotes that the prbablity of a person being less than 18 years old 
+
+# Given P(L|Y) = 0.02 and P(L|Y') = 0.05 and P(Y) = 0.3
+
+# find P(Y'|L) 
+
+# now, we know that P(L|Y) = 0.02 which can be represented as P(L and Y)/P(Y) = 0.02
+# we know P(Y) = 0.3, so P(L and Y) = 0.02*0.3 = 0.06 ---- equation 1
+
+# now, we know that P(L|Y') = 0.05, which can be represented as P(L and Y')/P(Y') = 0.05
+# we know P(Y') = 1- P(Y) = 1- 0.3 = 0.7 
+# => P(L and Y') = 0.05 * 0.7 = 0.035 
+# now, P(L AND Y') can be written as P(L) - P(L AND Y) = 0.035 ---- equation 2 
+
+# adding equation 1 and 2, we get
+# P(L) = 0.041
+
+# now to get, P(Y'|L) = P (Y' AND L)/P(L)
+# => P(Y'|L) = 0.035/0.041 = 0.853
+
+```
+
+## Problem 3.b
+
+
+```{r}
+# find P(Y|L')
+
+# We know, P(Y|L') = P(Y AND L')/P(L')
+# can be written as, P(Y|L') = (P(Y)-P(Y AND L))/P(L')
+# subtituting values, we get, P(Y|L') = (0.3-0.006)/0.959
+# P(Y|L')= 0.3065
+
+```
+
+
+# Problem 4
+
+## Problem 4.a 
+
+```{r}
+# given, P(C)=probablity of owning a car = 0.6, P(H) = probablity of owning a house = 0.3 and P(C and H) = probablity of owning both house and car = 0.2
+
+# find P(C or H)
+
+# we know, P(C or H) = P(C) + P(H) + P(C AND H)
+# putting values, we get, P(C OR H) = 0.6 +0.3 -0.2 = 0.7
+
+```
+
+## Problem 4.b
+
+```{r}
+
+# find P(C|H) 
+
+# we know, P(C|H) = P(C AND H)/P(H)
+# putting values we get, P(C|H) = 0.2/0.3 = 0.666667
+
+```
+
+
+## Problem 5 
+
+
+```{r}
+#install.packages("ISwR")
+library("ISwR")
+
+# calculating min and max age and creating vector myBreaks
+minAge <- min(stroke$age)
+maxAge <- max(stroke$age)
+myBreaks <- c(seq(minAge,maxAge,length.out = 12))
+
+
+# creating vector xlim 
+xlimAge <- c(1,100)
+
+# creating histogram 
+
+?hist
+
+hist (stroke$age,breaks = myBreaks, freq = TRUE, col ='blue',main = 'Amazing Histogram',xlim = xlimAge, xlab = 'Age', ) 
+```
+

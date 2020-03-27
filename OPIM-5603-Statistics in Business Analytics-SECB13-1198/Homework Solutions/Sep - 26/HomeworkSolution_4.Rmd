@@ -1,0 +1,164 @@
+---
+title: "R Notebook"
+author: "Anusha Karunakaran"
+date: "09/26/2019"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    theme: united
+  html_notebook: default
+  pdf_document: default
+name: Anusha Karunakaran
+---
+
+
+# Problem 1
+
+## Problem 1.a
+<pre>
+Expected Number of Attendees = μ = n*pi
+where,
+n = sample size 
+π = probability of the event of interest for any trial
+(1 – π) = probability of no event of interest for any trial
+
+
+n=  325
+pi= 1 - 0.08 = 0.92
+Expected Number of Attendees = 325 * 0.92
+                             = 299
+</pre>
+
+
+## Problem 1.b
+
+<b> P(299 < X <= 325) = F(325) - F(299) </b>
+```{r}
+pbinom(325,325,0.92) - pbinom(299,325,0.92)
+```
+
+## Problem 1.c
+
+<b> P(300 < X <= 325) = F(325) - F(300) </b>
+```{r}
+pbinom(325,325,0.92) - pbinom(300,325,0.92)
+```
+
+## Problem 1.d
+
+<b> P(269 < X <= 299 ) </b>
+
+```{r}
+pbinom(299,325,0.92) - pbinom(269,325,0.92)
+```
+
+## Problem 1.e
+
+<b> P(X=300) </b>
+```{r}
+dbinom(300,325,0.92)
+
+```
+
+
+## Problem 1.f
+
+```{r}
+# To get the maximum revenue - we need 300 seats to be filled and no people to arrive
+# Let's assume we sell x tickets to fill all 300 seats up 
+# x . (probability of people showing up) = 300
+x <- round(300/0.92)
+x
+
+```
+
+
+# Problem 2
+
+## Problem 2.a
+<pre>
+Let N = Number of people show up in a given work day
+
+Let's model N as a Poisson distribution with lambda = 8x4x3 = 96
+(assume 8 hour work day)
+</pre>
+
+## Problem 2.b
+
+<pre>
+P(X>100) = 1 - F(100)
+         = 1 - ppois(100,lambda)
+</pre>
+```{r}
+Lambda <- 96
+1 - ppois(100,Lambda)
+```
+
+## Problem 2.c
+
+<b> P(3 <= X < 10) = P(X < 10) - P(X<3) </b>
+```{r}
+New_Lambda = 2*4*3
+ppois(9,24) -ppois(2,24)
+```
+
+## Problem 2.d
+
+<pre>
+P(X > 6) = 1 - F(6)
+         = 1 - ppois(6,Lambda) 
+         
+New_Lambda = 1*3 + 1*2 = 5
+</pre>
+
+```{r}
+New_Lambda = 1*3 + 1*2
+1- ppois(6,New_Lambda)
+```
+
+
+
+# Problem 3
+
+
+## Problem 3.a
+
+```{r}
+c=function(n,x){
+ comb = factorial(n)/(factorial(n-x)*factorial(x))
+  return (comb)
+}
+my_dbinom = function(x,n,pi){
+     return(c(n,x)*(pi^x)*((1-pi)^(n-x)))
+  }
+my_dbinom(2,3,0.2)
+```
+
+## Problem 3.b
+
+```{r}
+mean_binom = function(n,pi=0.5){
+     meanA = n*pi
+     return(meanA)
+  }
+mean_binom(2,0.2)
+```
+
+
+
+## Problem 3.c
+
+```{r}
+var_binom = function(n,pi=0.5){
+     varA = n*pi*(1-pi)
+     return(varA)
+  }
+var_binom(10,0.2)
+```
+
+
+
+ 
+
+

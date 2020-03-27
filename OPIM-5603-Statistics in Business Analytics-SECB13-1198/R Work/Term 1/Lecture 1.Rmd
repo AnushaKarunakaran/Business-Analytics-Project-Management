@@ -1,0 +1,87 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    number_section: true
+    theme: united
+  html_notebook: default
+  pdf_document: default
+name: David Bergman
+---
+
+# Introductory Material
+
+If you want to add a chunk, either select Insert from menu, or use Cntl+Atl+i
+
+## Subcontent
+
+```{r}
+3+4
+```
+
+## Another subcontent
+
+here is another chunk
+
+```{r}
+4+9
+```
+
+
+# New section
+
+```{r}
+plot(rnorm(100))
+```
+
+
+
+# Variables
+
+```{r}
+x <- 4
+y <- 5
+x*y
+z = 6
+x*y*z
+y <- 9
+y
+# here I am showing that you can subtract a variable from itself!
+
+y - y
+y <- x
+y
+```
+
+```{r}
+david <- 7
+david
+```
+
+
+```{r}
+ls()
+```
+
+This will delete all of my variables
+
+```{r}
+rm(list=ls())
+```
+
+
+# Example of using a package
+
+
+
+```{r}
+library("ISwR")
+heart.rate
+length(heart.rate)
+```
+
+
+
+

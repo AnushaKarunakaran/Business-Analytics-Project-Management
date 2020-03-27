@@ -1,0 +1,132 @@
+---
+title: "R Notebook"
+author: "Anusha Karunakaran"
+date: "10/17/2019"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    theme: united
+  html_notebook: default
+  pdf_document: default
+name: Anusha Karunakaran
+---
+
+
+# Problem a
+4. A risk-averse person would always prefer a greater, non-guaranteed reward to a lesser,
+but guaranteed reward.
+
+# Problem b
+2. Small-cap stocks
+
+# Problem c
+3. Treasury bonds have earned a higher return than corporate bonds.
+
+# Problem d
+3. The one with a greater variance of returns.
+
+# Problem e
+Assets B and C is not dominated by any other assets in terms of return.
+
+# Problem f
+
+Given:
+The covariance between their returns = 0.033
+The Annual Return Volatility of Stock 1 = 31%
+The Annual Return Volatility of Stock 2 = 34%
+
+```{r}
+Covariance <- 0.033
+STD_1 <- 0.31
+STD_2 <- 0.34
+
+Correlation_Coefficient <- Covariance/(STD_1*STD_2)
+round(Correlation_Coefficient,3)
+```
+
+# Problem g
+Given :
+Annual Stock Returns = 10%,3%,12%
+Annual Market Returns = 5%,12%,8%
+Time Period = 3 years
+
+
+```{r}
+Stock_Returns <- c(0.1,0.03,0.12)
+Market_Returns <- c(0.05,0.12,0.08)
+Time_Period <- 3
+Correlation <-  round(cor(Stock_Returns,Market_Returns),3)
+Correlation
+```
+
+
+
+# Problem h
+Corelation between a stock’s returns and market returns P is 0.89.
+Standard deviation of returns for the stock sdS
+standard deviation of returns for the market index sdM
+
+{r}
+
+```{r}
+Correlation_SM <- 0.89
+SD1 <- 0.21
+SD2 <- 0.18
+Covariance_h <- Correlation_SM*SD1*SD2
+Beta <- round((Covariance_h) / (SD2* SD2),2)
+Beta
+```
+
+
+
+# Problem i 
+```{r}
+Stock_Returns_i  <- c(0.02,0.02,0.14,0.08)
+Market_Returns_i <- c(0.02,0.08,0.09,0.02)
+Correlation_i <- cor(Stock_Returns_i,Market_Returns_i)
+Stock_Beta <- round((Correlation_i) * (sd(Stock_Returns_i)/sd(Market_Returns_i)),3)
+Stock_Beta
+```
+
+
+# Problem j
+Excel : CORREL(B2:B62,D2:D62)
+
+```{r}
+round(0.776514,3)
+```
+
+
+# Problem k
+```{r}
+Covariance_k <- 10620.17149
+STD_Apple <- 21.40299548
+STD_SP <- 639.0099688
+Beta_Apple <- round(Covariance_k/(STD_Apple*STD_Apple),2)
+Beta_Apple
+```
+
+
+
+
+# Problem l
+2. If a stock’s returns are perfectly correlated with market returns, the beta of the stock
+must be one.
+
+
+# Problem m
+2. With two uncorrelated assets, the standard deviation of the portfolio equals x1σR1 +
+x2σR2.
+
+# Problem n
+```{r}
+Weight_1 <- 20000/(20000+38000)
+Weight_2= 38000/(20000+38000)
+STDDEV_1 <- 0.40
+STDDEV_2 <- 0.38
+Correlation_n <- 0.1
+Standard_Deviation_N <- round(sqrt(( (Weight_1^2) * (STDDEV_1^2) ) +( (Weight_2^2) * (STDDEV_2^2) ) + (2*Weight_1*Weight_2*Correlation_n*STDDEV_1*STDDEV_2)),2)
+Standard_Deviation_N
+```
+

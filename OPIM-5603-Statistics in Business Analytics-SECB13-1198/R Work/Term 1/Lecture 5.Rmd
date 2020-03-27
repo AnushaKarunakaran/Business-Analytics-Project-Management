@@ -1,0 +1,232 @@
+---
+title: "Lecture 5"
+author: "David Bergman"
+date: "09/26/19"
+output:
+  html_document:
+    number_sections: yes
+    toc: yes
+---
+
+Let N be the number of complaints in an 8-hour day.
+
+We will model N as a Poisson random variable.  
+
+expected number: 24
+
+```{r}
+rpois(100,24)
+```
+
+```{r}
+mean(rpois(10000,24))
+```
+
+```{r}
+number_of_complains_sim <- rpois(10000,24)
+```
+
+```{r}
+fewer_than_20 <- number_of_complains_sim < 20
+```
+
+```{r}
+sum(fewer_than_20)/length(fewer_than_20)
+```
+
+```{r}
+ppois(19,24)
+```
+
+SAMPLE
+
+```{r}
+random_draw <- sample( c(0,1,2,3)  , 
+                       100, 
+                       replace = TRUE,  
+                       prob = c(0.6,0.2,0.1,0.1))
+random_draw
+mean(random_draw)
+```
+
+```{r}
+random_draw <- replicate(100,rpois(1,24))
+mean(random_draw)
+```
+
+
+Slide 35
+```{r}
+random_draw <- replicate( 10000 ,
+                          rpois(1,24) +
+                          rbinom(1,325,0.05))
+# Estimated average
+mean(random_draw)
+# Estimated variance
+var(random_draw)
+sd(random_draw)
+# prob of angry
+angry_sim <- random_draw >= 50
+angry_sim
+sum(angry_sim)/length(angry_sim)
+```
+
+
+
+
+```{r}
+dnorm(0,mean=0,sd=0.000001)
+```
+
+
+```{r}
+5*10
+```
+
+
+```{r}
+mean(replicate( 1000, sum(rnorm(rpois(1,100),5,1))))
+```
+
+
+Suppose a bus will arrive to a stop between 2 and 6 minute
+from now, uniformly distributed in that range
+
+What is f(3)
+```{r}
+#f(3)
+dunif(3,min=2, max=6)
+
+#f(1)
+dunif(1,min=2, max=6)
+
+#F(3)
+punif(3,min=2,max=6)
+
+#f(4)
+dunif(4,min=2,max=6)
+#F(4)
+punif(4,min=2,max=6)
+
+# randomly draw
+runif(100,min=2,max=6)
+
+```
+
+Suppose the expected time between 
+arrivals of trucks to a depot is 10 minutes
+The weight of items in each truck is normally distributed
+with mean of 1000 pounds and standard deviation 15
+
+What is the expected number of pounds of material that has to be 
+unloaded during 1 hour?
+
+```{r}
+
+rpois(1,6)
+
+
+sum(
+  rnorm( rpois(1,6) , 1000, 15 )
+)
+
+simulated_values <- replicate(1000,
+                                sum(
+                                  rnorm( rpois(1,6) , 1000, 15 )
+                                )
+                              )
+mean(simulated_values)
+```
+ 
+in one hour you only have capacity to unload 8000 pounds.
+what is the probability that you will be unable to unload the entire 
+demand in one hour?
+
+
+```{r}
+too_large <- simulated_values > 8000
+sum(too_large)/length(too_large)
+
+```
+
+
+
+
+# Slide 51
+
+Let T be the number of hours between consecutive arrivals 
+
+```{r}
+
+lambda = 20
+```
+
+
+```{r}
+
+# P( T < 6 minutes ) = P(T < .1 Hours) = P(T <= .1 Hours)
+pexp(.1,lambda)
+```
+
+
+```{r}
+
+# Let S be the number of minutes between consecutive arrivals 
+lambda_s = 1/3
+
+# P( S <= 6 minutes ) 
+pexp(6,lambda_s)
+
+
+# 
+
+
+
+qnorm(0,mean=0,sd=1)
+
+qnorm(0.4,mean=0,sd=1)
+
+
+qnorm(0.6,mean=0,sd=1)
+
+
+qunif(0.5,min=10,max=20)
+
+
+qunif(0,min=10,max=20)
+
+
+qunif(1,min=10,max=20)
+
+
+
+# What is the value for which 40% of the distribution is to my left?
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

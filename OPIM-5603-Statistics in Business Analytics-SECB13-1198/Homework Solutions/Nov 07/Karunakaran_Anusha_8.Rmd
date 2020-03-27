@@ -1,0 +1,493 @@
+---
+title: "R Notebook"
+author: "Anusha Karunakaran"
+date: "11/07/2019"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    theme: united
+  html_notebook: default
+  pdf_document: default
+name: Anusha Karunakaran
+---
+
+
+# Problem 1
+
+## Problem 1.a
+Since the population is normally distributed and we do not know the standard deviation of the  population we will use the Student T Distribution
+
+```{r}
+waiting_time_sample <- c(13.2,19,2,3,7.4,32.1,8,1,3.4,7.4,8.9,30.2,17.2)
+length_wt <- length(waiting_time_sample)
+
+```
+
+```{r}
+Standard_Error = sd(waiting_time_sample)/sqrt(length_wt)
+Standard_Error
+```
+```{r}
+#1-alpha = 0.85
+alpha = 1 - 0.85
+alpha
+alphaby2 = alpha/2
+alphaby2
+ci = 1-alphaby2
+ci
+UB_wt = mean(waiting_time_sample)+ Standard_Error*qt(0.925,df=12)
+UB_wt
+LB_wt = mean(waiting_time_sample)- Standard_Error*qt(0.925,df=12)
+LB_wt
+```
+
+## Problem 1.b
+Since the population standard deviation is given, we can find the confidence interval like below:
+
+```{r}
+mean_wt = mean(waiting_time_sample)
+mean_wt
+Critical_value = qnorm(alphaby2)
+Critical_value
+Critical_Value_Wt = 1.44
+Critical_Value_Wt
+```
+
+
+```{r}
+UpperBound=qnorm(0.925,mean=mean_wt,sd=10/sqrt(13))
+UpperBound
+LowerBound=qnorm(0.075,mean=mean_wt,sd=10/sqrt(13))
+LowerBound
+```
+
+
+## Problem 1.c
+When we don't know if the population is normally distributed, we can use the method of bootstrapping:
+
+```{r}
+set.seed(100)
+sampling_dist <- replicate(1000,mean(sample(waiting_time_sample,size=length_wt,replace=TRUE)))
+LB <- quantile(sampling_dist,0.075)
+LB
+UB <- quantile(sampling_dist,0.925)
+UB
+```
+
+## Problem 1.d
+<pre>
+Suppose you know that the population waiting time is exponentially distributed. Build a 85%
+confidence interval for the mean waiting time.
+
+Mean = 11.75
+N = 13 
+SD = 10.22
+</pre>
+For exponential distribution 
+
+```{r}
+A = 1.9
+pexp(A) - pexp(-A)
+```
+
+Therefore , 
+```{r}
+pnorm(1.9)
+qnorm(0.971)
+```
+
+for exponential distribution 
+
+```{r}
+xbar_spl = mean(waiting_time_sample)
+SD_spl = sd(waiting_time_sample)
+sampling_sd = SD_spl/sqrt(13)
+upper_exp = xbar_spl + qexp(0.971) * sampling_sd
+upper_exp
+lower_exp = xbar_spl + qexp(0.029) * sampling_sd
+lower_exp
+
+```
+
+The confidence interval for the exponential distribution is [21.79, 11.83]
+
+
+
+# Problem 2
+
+## Problem 2.a
+<pre>
+Power Drills that work: 253 
+Power Drills that doesn't work: 7
+p = 7/260 
+</pre>
+
+For 95% confidence interval,
+```{r}
+A = 1.965 
+pnorm(A) - pnorm(-A)
+
+```
+
+```{r}
+pnorm(1.965)
+qnorm(0.975)
+```
+
+
+```{r}
+n <- 260
+p <- 7/260 
+sep_power = sqrt(7/260*(1- 7/260)/260)
+sep_power
+```
+
+```{r}
+upperb_power = qnorm(0.975 , mean = 7/260, sd = sep_power)
+upperb_power
+lowerb_power = qnorm(0.025, mean = 7/260 , sd = sep_power)
+lowerb_power
+
+```
+
+95% Confidence interval for the proportion of power drills that don't work is [0.0465 , 0.007]
+
+
+## Problem 2.b
+<pre>
+Power Drills that work: 200
+Power Drills that doesn't work: 60
+p = 60/260 
+</pre>
+
+For 95% confidence interval,
+```{r}
+A = 1.965 
+pnorm(A) - pnorm(-A)
+
+```
+
+```{r}
+pnorm(1.965)
+qnorm(0.975)
+```
+
+
+```{r}
+n <- 26060
+p <- 60/260 
+sep_power = sqrt(60/260*(1- 60/260)/260)
+sep_power
+```
+
+```{r}
+upperb_power = qnorm(0.975 , mean = 60/260, sd = sep_power)
+upperb_power
+lowerb_power = qnorm(0.025, mean = 60/260 , sd = sep_power)
+lowerb_power
+
+```
+
+95% Confidence interval for the proportion of power drills that don't work is [0.281,0.179]
+
+
+# Problem 3
+
+## Problem 3.a
+Null Hypothesis: H0: The company has insufficient shelving units to satisfy daily demand
+
+## Problem 3.b
+Alternate Hypothesis: H1: The company has sufficient shelving units to satisfy daily demand
+
+## Problem 3.c
+μ0 = 162
+
+## Problem 3.d
+Mean
+
+## Problem 3.e
+Mean number of tanks sold which is 150.8
+
+## Problem 3.f
+No. Since the sample size > 30, we can substitute the sample standard deviation for the population standard deviation.
+
+## Problem 3.g
+```{r}
+Mu0 = 162
+xBar <- 150.8
+s <- 50.3
+SE <- s/sqrt(32)
+df <- 32-1
+```
+
+#### using Z-test
+```{r}
+UB_Z <- Mu0 - SE*qnorm(0.9)
+UB_Z
+
+print(paste("For Z- test, xBar that is lesser than ",round(UB_Z,2), " will lead to rejection of the null hypothesis"))
+```
+
+#### Using t-test
+```{r}
+UB_t <- Mu0 - SE*qt(0.9, df)
+UB_t
+print(paste("For t-test, xBar that is lesser than ",round(UB_t,2), " will lead to rejection of the null hypothesis"))
+```
+
+
+## Problem 3.h
+
+```{r}
+Mu0 = 162
+xBar <- 150.8
+s <- 50.3
+SE <- s/sqrt(32)
+df <- 32-1
+```
+
+#### using Z-test
+```{r}
+UB_Z <- Mu0 - SE*qnorm(0.95)
+UB_Z
+print(paste("For Z- test, xBar that is lesser than ",round(UB_Z,2), " will lead to rejection of the null hypothesis"))
+```
+
+
+#### Using t-test
+```{r}
+UB_t <- Mu0 - SE*qt(0.95, df)
+UB_t
+print(paste("For t-test, xBar that is lesser than ",round(UB_t,2), " will lead to rejection of the null hypothesis"))
+```
+
+
+
+## Problem 3.i
+
+```{r}
+Mu0 = 162
+xBar <- 150.8
+s <- 50.3
+SE <- s/sqrt(32)
+df <- 32-1
+```
+
+#### using Z-test
+```{r}
+UB_Z <- Mu0 - SE*qnorm(0.99)
+UB_Z
+print(paste("For Z- test, xBar that is lesser than ",round(UB_Z,2), " will lead to rejection of the null hypothesis"))
+
+```
+
+
+#### Using t-test
+```{r}
+UB_t <- Mu0 - SE*qt(0.99, df)
+UB_t
+print(paste("For t-test, xBar that is lesser than ",round(UB_t,2), " will lead to rejection of the null hypothesis"))
+```
+
+
+
+## Problem 3.j
+```{r}
+Mu0 = 162
+xBar <- 150.8
+s <- 50.3
+SE <- s/sqrt(32)
+df <- 32-1
+TS <- (xBar - Mu0)/SE
+```
+
+#### using Z-test
+```{r}
+UB_Z <-  -1 * qnorm(0.90)
+UB_Z
+print(paste("For Z- test, TS is " ,round(TS,2), " that is lesser than ",round(UB_Z,2), " will lead to rejection of the null hypothesis"))
+```
+
+
+#### Using t-test
+```{r}
+UB_t <-  -1 * qt(0.90, df)
+UB_t
+print(paste("For t-test, TS is " ,round(TS,2), "that is lesser than ",round(UB_t,2), " will lead to rejection of the null hypothesis"))
+
+```
+
+
+## Problem 3.k
+```{r}
+Mu0 = 162
+xBar <- 150.8
+s <- 50.3
+SE <- s/sqrt(32)
+df <- 32-1
+TS <- (xBar - Mu0)/SE
+```
+
+#### using Z-test
+```{r}
+UB_Z <-  -1 * qnorm(0.95)
+UB_Z
+print(paste("For Z- test,TS is " ,round(TS,2), " that is lesser than ",round(UB_Z,2), " will lead to rejection of the null hypothesis"))
+```
+
+#### Using t-test
+```{r}
+UB_t <-  -1 * qt(0.95, df)
+UB_t
+print(paste("For t-test,TS is " ,round(TS,2), "that is lesser than ",round(UB_t,2), " will lead to rejection of the null hypothesis"))
+```
+
+
+
+## Problem 3.l
+```{r}
+Mu0 = 162
+xBar <- 150.8
+s <- 50.3
+SE <- s/sqrt(32)
+df <- 32-1
+TS <- (xBar - Mu0)/SE
+```
+
+
+#### using Z-test
+```{r}
+UB_Z <-  -1 * qnorm(0.99)
+UB_Z
+print(paste("For Z- test, TS is " ,round(TS,2), " that is lesser than ",round(UB_Z,2), " will lead to rejection of the null hypothesis"))
+```
+
+#### Using t-test
+
+```{r}
+UB_t <-  -1 * qt(0.99, df)
+UB_t
+print(paste("For t-test, TS is " ,round(TS,2), "that is lesser than ",round(UB_t,2), " will lead to rejection of the null hypothesis"))
+```
+
+
+## Problem 3.m
+P(xBar >= 162)
+P(TS >= 162)
+
+#### Based on Xbar
+```{r}
+Mu0 = 162
+xBar <- 150.8
+s <- 50.3
+SE <- s/sqrt(32)
+df <- 32-1
+```
+
+
+#### According to t test
+```{r}
+pt(((xBar-Mu0)/(SE)),df)
+```
+
+#### According to z test
+```{r}
+pnorm(((xBar-Mu0)/(SE)))
+```
+
+#### Based on TS
+```{r}
+TS <- (xBar - Mu0)/SE
+```
+
+#### According to t test
+```{r}
+pt(TS,df)
+
+```
+
+#### According to z test
+```{r}
+pnorm(TS)
+```
+
+
+## Problem 3.n
+P(xBar >= 162)
+P(TS >= 162)
+
+#### Based on Xbar
+```{r}
+Mu0 = 162
+xBar <- 150.8
+s <- 50.3
+SE <- s/sqrt(32)
+df <- 32-1
+```
+
+#### According to t test
+```{r}
+pt(((xBar-Mu0)/(SE)),df)
+```
+
+#### According to z test
+```{r}
+pnorm(((xBar-Mu0)/(SE)))
+```
+
+#### Based on TS
+```{r}
+TS <- (xBar - Mu0)/SE
+```
+
+#### According to t test
+```{r}
+pt(TS,df)
+```
+
+#### According to z test
+```{r}
+pnorm(TS)
+```
+
+
+## Problem 3.o
+We observe that the p value are a representation of the probability of finding a sample result as extreme as the given sample result GIVEN THAT H0 is true. 
+
+For 'Z' Test, In this case, the p value is observed to be 0.1039 i.e. value as extreme as 150.8 and below can be found with probability of 10.39%. So, we can only reject H0 if the confidence level is 89.60% or lower (ref. Problem 3.n). 
+
+For 'T' Test, In this case, the p value is observed to be 0.1086 i.e. value as extreme as 150.8 and below can be found with probability of 10.86%. So, we can only reject H0 if the confidence level is 89.13% or lower (ref. Problem 3.n). 
+
+The rejection region for 90% in 'Z' test is <= -1.28 for the transformed test statistic. (ref. Problem 3.j). Rejection region reduces as the confidence level desired increases ( ref Problem 3.k and 3.l). Hence, the given sample can't reject the H0, as also proved by the p value. 
+
+Likewise, The rejection region for 90% in 'T' test is <= -1.30 for the transformed test statistic. (ref. Problem 3.j). Rejection region reduces as the confidence level desired increases ( ref Problem 3.k and 3.l). Hence, the given sample can't reject the H0, as also proved by the p value.
+
+
+
+# Problem 4
+
+## Problem 4.a
+```{r}
+n <- 30
+SD1 <- 5700
+SD2 <- 20000
+Width1 <- 2*qnorm(0.95)*(SD1/sqrt(n))
+Width2 <- 2*qnorm(0.95)*(SD2/sqrt(n))
+Width1
+Width2
+```
+
+Maximum width is with 20000 standard deviation and the value is 12012.
+
+## Problem 4.b
+```{r}
+house <- vector()
+house <- lapply(5700:20000, function(x){
+  house <- (20000 + 2*qnorm(0.95)*(x/sqrt(30))) - 1950
+  return(house)
+})
+
+length(house)
+```
+

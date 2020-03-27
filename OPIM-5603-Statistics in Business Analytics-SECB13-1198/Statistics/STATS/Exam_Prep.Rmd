@@ -1,0 +1,444 @@
+---
+title: "R Notebook - Exam Preparation"
+author: "Anusha Karunakaran"
+---
+
+
+#Problem 1 - Binomial Distribution
+Corporation X is buying 150 computers from DELL.  It is known that the motherboard used in the computers have probability 0.12 of having a certain defect
+
+Let X be the number of defective computers.
+
+We will model X as a binomial distribution with n = 150 and pi = 0.12
+
+
+##Problem 1.a
+What is the probability that 10 computers will have the defect?
+
+dbinom(x, size, prob, log = FALSE)
+P(X=10)
+
+```{r}
+dbinom(10,150,0.12)
+```
+
+
+##Problem 1.b
+What is the probability that no more than 25 computers will have the defect?
+
+P (X<=25)
+
+```{r}
+pbinom(25,150,0.12)
+```
+
+##Problem 1.c
+What is the probability that fewer than 25 but at least 20 computers will have the defect?
+
+P(20 <= X < 25  ) = P(X < 25) - P(X<20)
+
+```{r}
+pbinom(24,150,0.12) - pbinom(19,150,0.12)
+```
+
+
+##Problem 1.d
+How many computers does Corporation X expect to have this defect?
+
+E(X) = n * pi
+
+```{r}
+mu = sum(150*0.12)
+```
+
+
+##Problem 1.e
+What is the standard deviation of the number of computers that have this defect?
+
+
+```{r}
+n <- 150
+p <- 0.12
+S.D <- sqrt( n*pi*(1-pi) )
+S.D
+```
+
+
+##Problem 1.f
+Corporation X is reconsidering their decision to purchase the computers.  They only want to make the purchase if the probability of having more than 22 computers with the defect is less than 0.2.  Will the purchase be made?
+
+
+P(X > 22) = 1 - P(X <= 22)
+
+
+```{r}
+1 - pbinom(22,150,0.12)
+```
+
+Yes, The purchase will be made.
+
+
+##Problem 1.g
+Suppose that you are in charge of purchasing the computers, and you want to assure the president of Corporation X that this is a good purchase.  Your goal is to tell her “I am at least 90% sure that there will be at most K defective motherboards.” Of course, the lower K is, the better.  What is the lowest value of K that you can make this claim for?
+
+P(X <= k) >= 0.9 
+
+
+```{r}
+qbinom(0.9,n,pi)
+```
+
+
+#Problem 2 - Poisson Distribution
+
+
+The IT department at Corporation X maintains the website for the company.  Past experience indicates that during working hours, the average time between successive complaints on their website is 20 minutes.  If we model the number of complaints received in given work day as a Poisson distribution:
+
+##Problem 2.a
+What is the average number of complaints received in an eight-hour work day?
+
+```{r}
+lambda <- 8*3
+lambda
+```
+
+
+##Problem 2.b
+In an eight-hour work day, what is the probability that the IT department will receive fewer than 20 complaints?
+
+P(X<20) = P(X<=19)
+
+```{r}
+ppois(19,lambda)
+```
+
+
+##Problem 2.c
+The Friday before each holiday, the IT department responds to complaints only for the first six hours of the day.  What is the probability that the IT department will receive fewer than 20 complaints in a six-hour day?
+
+P(X<20) = P(X<=19)
+
+```{r}
+new_lambda <- 6 * 3
+ppois(19,new_lambda)
+```
+
+
+#Problem 3 - Poisson Distribution
+
+Traffic accidents at a particular intersection follow Poisson distribution with an average rate of 1.4 per week.
+
+##Problem 3.a
+What is the probability that the next week is accident-free?
+
+P(X=0)
+
+```{r}
+lambda_3a <- 1.4
+dpois(0,lambda_3a)
+```
+
+##Problem 3.b
+What is the probability that there will be exactly 3 accidents next week?
+
+P(X=3)
+
+```{r}
+lambda_3b <- 1.4
+dpois(3,lambda_3b)
+```
+
+##Problem 3.c
+What is the probability that there will be at most 2 accidents next week?
+
+P(X<=2)
+
+```{r}
+lambda_3c <- 1.4
+ppois(2,lambda_3c)
+```
+
+##Problem 3.d
+What is the probability that there will be at least 2 accidents during the next two weeks?
+
+P(X>=2)
+
+```{r}
+lambda_3d <- 2 * 1.4
+1 - ppois(1,lambda_3d)
+```
+
+##Problem 3.e
+What is the probability that there will be exactly 5 accidents during the next four weeks?
+
+P(X=5)
+
+```{r}
+lambda_3e <- 1.4 * 4
+dpois(5,lambda_3e)
+```
+
+##Problem 3.f
+What is the probability that there will be 2 accidents tomorrow?
+
+```{r}
+lambda_3f <- 1.4/7
+dpois(2,lambda_3f)
+```
+
+##Problem 3.g
+What is the probability that the next accident will not occur for three days?
+
+```{r}
+lambda_3g <- (1.4/7) * 3
+dpois(0,lambda_3g)
+```
+
+##Problem 3.h
+What is the probability that the next accident will occur during the third day? (That is, the time until the next accident is more than two days, but less than three days.)
+
+P( 2 < T < 3 ) 
+
+```{r}
+lambda_3h <- (1.4/7)
+dpois(0,lambda_3h) * dpois(0,lambda_3h) * (1 - ppois(0,lambda_3h))
+```
+
+##Problem 3.i 
+What is the probability that the fourth accident will occur before the end of the seventh day?
+
+P( 2 < T < 3 ) 
+
+```{r}
+lambda_3i <- 1.4
+1 - ppois(3, lambda_3i)
+```
+
+##Problem 3.j
+What is the probability that the second accident will occur before the end of the third day?
+
+ P( at least 2 accidents will occur in three days)
+ 
+```{r}
+lambda_3j <- (1.4/7) * 3
+1 - ppois(1, lambda_3j)
+```
+
+
+##Problem 3.k
+What is the probability that the third accident will occur during the fourth day? 
+
+P( at most two accidents will occur in three days) – P( at most two accidents will occur in four days)
+
+
+```{r}
+lambda_3ka <- (1.4/7) * 3
+lambda_3kb <- (1.4/7) * 4
+
+ppois(2, lambda_3ka) - ppois(2, lambda_3kb)
+```
+
+##Problem 3.l
+
+What is the probability that there will be exactly three accident-free weeks during the next eight weeks?
+
+```{r}
+lambda_3l <- 1.4
+Success  <- dpois(0,lambda_3l)
+
+dbinom(3,8,Success)
+```
+
+##Problem 3.m
+What is the probability that there will be exactly five accident-free days during the next week?
+
+```{r}
+lambda_3m <- 1.4/7
+Success  <- dpois(0,lambda_3m)
+
+dbinom(5,7,Success)
+```
+
+
+#Problem 4 - Poisson Distribution
+
+The number of typos made by a student follows Poisson distribution with the rate of 1.5 typos per page. Assume that the numbers of typos on different pages are independent.
+
+
+##Problem 4.a
+Find the probability that there are at most 2 typos on a page.
+
+P(X<=2)
+
+```{r}
+lambda_4a <- 1.5
+ppois(2,lambda_4a)
+```
+
+
+##Problem 4.b
+Find the probability that there are exactly 10 typos in a 5-page paper.
+
+P(X=10)
+
+```{r}
+lambda_4b <- 1.5 * 5
+dpois(10,lambda_4b)
+```
+
+
+##Problem 4.c
+Find the probability that there are exactly 2 typos on each page in a 5-page paper.
+
+
+```{r}
+lambda_4c <- 1.5
+Success <- dpois(2,lambda_4c)
+dbinom(5,5,Success)
+```
+
+
+##Problem 4.d
+Find the probability that there is at least one page with no typos in a 5-page paper.
+
+```{r}
+lambda_4d <- 1.5
+Success <- ppois(0,lambda_4d)
+1-dbinom(0,5,Success)
+```
+
+
+##Problem 4.e
+Find the probability that there are exactly two pages with no typos in a 5-page paper.
+
+```{r}
+lambda_4e <- 1.5
+Success <- ppois(0,lambda_4e)
+dbinom(2,5,Success)
+```
+
+##Problem 4.f
+Find the probability that the first two pages have no typos.
+
+```{r}
+lambda_4f <- 1.5 * 2
+dpois(0,lambda_4f)
+```
+
+##Problem 4.g
+Find the probability that the first typo would occur on the third page.
+
+```{r}
+lambda_4g <- 1.5
+dpois(0,lambda_4g) * dpois(0,lambda_4g) * (1 - ppois(0,lambda_4g))
+```
+
+##Problem 4.h
+Find the probability that the first typo would occur on the second (bottom) half of the second page.
+
+```{r}
+lambda_4h <- 1.5 * 0.5
+dpois(0,lambda_4h) * dpois(0,lambda_4h) * dpois(0,lambda_4h) * (1 - ppois(0,lambda_4h))
+```
+
+
+##Problem 4.i
+Find the probability that the second typo would occur on the third page.
+
+```{r}
+lambda_4ia <- 1.5 * 2
+lambda_4ib <- 1.5 * 3
+
+ppois(1, lambda_4ia) - ppois(1, lambda_4ib)
+```
+
+
+##Problem 4.j
+Find the probability that the third typo would occur on the third page.
+
+```{r}
+lambda_4ja <- 1.5 * 2
+lambda_4jb <- 1.5 * 3
+
+ppois(2, lambda_4ja) - ppois(2, lambda_4jb)
+
+```
+
+
+##Problem 4.k
+Find the probability that the third typo would occur before the third page (that is, the third typo occurs either on the first or on the second page).
+
+```{r}
+lambda_4ka <- 1.5 * 2
+1- ppois(2,lambda_4ka)
+```
+
+
+##Problem 4.l
+Find the probability that the fifth typo would occur either on the seventh or on the eighth page. 
+
+```{r}
+lambda_4la <- 1.5 * 6
+lambda_4lb <- 1.5 * 8
+
+ppois(4, lambda_4la) - ppois(4, lambda_4lb)
+```
+
+
+
+#Problem 5 - Simple Example
+Suppose the defective rate at a particular factory is 1%. Suppose 50 parts were selected from the daily output of parts. Let X denote the number of defective parts in the sample.
+
+##Problem 5.a
+Find the probability that the sample contains exactly 2 defective parts
+
+```{r}
+Success <- 0.01
+n <- 50
+
+dbinom(2,50,Success)
+```
+
+##Problem 5.b
+Use Poisson approximation to find the probability that the sample contains exactly 2 defective parts.
+
+
+```{r}
+lambda_5b <- 50 * 0.01
+dpois(2,lambda_5b)
+```
+
+##Problem 5.c
+Find the probability that the sample contains at most 1 defective part.
+
+```{r}
+Success <- 0.01
+n <- 50
+
+pbinom(1,50,Success)
+```
+
+##Problem 5.d
+Use Poisson approximation to find the probability that the sample contains at most 1 defective part.
+
+```{r}
+lambda_5d <- 50 * 0.01
+ppois(1,lambda_5b)
+```
+
+
+# Problem 6 - Simple Example
+If there are twelve cars crossing a bridge per minute on average, find the probability of having seventeen or more cars crossing the bridge in a particular minute.
+
+##Part A  -  X or less
+The probability of having sixteen or less cars crossing the bridge in a particular minute is given by the function ppois.
+```{r}
+ppois(16, lambda=12)
+```
+
+##Part B  -  X or more
+Hence the probability of having seventeen or more cars crossing the bridge in a minute is in the upper tail of the probability density function.
+
+```{r}
+ppois(16, lambda=12, lower=FALSE)   ##upper tail 
+```

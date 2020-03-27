@@ -1,0 +1,150 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    theme: united
+  html_notebook: default
+  pdf_document: default
+name: Anusha Karunakaran
+---
+
+# Problem 1
+
+
+## Problem 1.c.
+
+<!-- Arithmetic Operations. --> 
+
+```{r}
+x <- 312/12
+x
+```
+```{r}
+y <- round(x,2)
+y
+```
+```{r}
+help("ceiling")
+z <- ceiling(x)
+z
+```
+
+## Problem 1.d.
+
+<!-- Vectors. --> 
+
+```{r}
+cityNames = c("Shanghai","Beijing","Delhi","Karachi","Lagos","Tianjin")
+```
+
+```{r}
+cityNames[2]
+```
+
+```{r}
+population =c(26.32,21.54,18.98,14.91,17.50,15.62)
+area =c(2448,6490,573,1459,452,4541)
+population.density <- population/area
+population.density
+```
+
+
+```{r}
+a = c(12,17,18,1,2,6)
+b = c(2,3,4)
+a/b
+```
+
+
+```{r}
+x.rand = c(rnorm(100,mean=10,sd=3))
+x.rand
+```
+
+```{r}
+for (i in 1:length(x.rand)) {
+  if (i %% 2 == 0) 
+  {
+    x.rand[i] <- x.rand[i]/3
+  }
+    else
+    {
+      x.rand[i] <- x.rand[i]/2
+    }
+}
+x.rand
+
+```
+
+
+# Problem 2
+
+Link : https://news.gallup.com/poll/241649/employee-engagement-rise.aspx
+
+## Problem 2.a.
+
+<!-- Summary of the article. --> 
+
+"Employee Engagement on the Rise in the U.S." article produces a report on the percentage of engaged and actively disengaged workers in U.S.The engagement is measured through actionable workplace elements with proven linkages to performance outcomes—opportunities for workers to do what they do best, opportunities to develop their job skills and having their opinions count, for example.The poll reveals that 34% of the employees were engaged along with 16.5% who were actively disengaged.
+
+## Problem 2.b
+
+<!-- Population of interest. --> 
+
+The population of interest are the people working full or part time for an organization living in all 50 U.S. states and the District of Columbia, aged 18 and older.
+
+## Problem 2.c
+
+<!-- Description of the data. --> 
+
+The data is collected from 30,628 people based on mailed surveys conducted between January to June 2018.The main idea is to calculate the percentage of employee engagement at their workplace.
+
+## Problem 2.d
+
+<!-- Population parameter of interest. --> 
+
+The population parameter of interest is the proportion of engaged workers working full or part time in the US.
+
+## Problem 2.e  
+
+<!-- Statistic used to estimate the parameter --> 
+
+The statistic is the 34% obtained from the sample of 30,628 people.According to the population parameter of interest, Only 34 people in each 100 people are actively engaged at workplace.
+
+The statistics used is Inferential Statistics as we have taken the data from total sample of employed adults(the margin of sampling error is ±0.8 percentage points at the 95% confidence level) and concluded that 34% of the people are actively engaged at workplace.
+
+
+## Problem 2.f  
+
+<!-- Sampling Technique --> 
+
+Simple Random sampling is used. Yes, Simple Random sampling was appropriate as every one in the target population has the same chance of being selected and has a little chance of bias.
+
+However, Random differences from sample to sample would have been minimised if gallup had employed a technique to overcome the nonresponse bias.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
